@@ -1,0 +1,16 @@
+.App {
+  display: flex;
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+  width: 200px;
+  background-color: #FFF;
+  height: 100vh;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.dashboard {
+  flex-grow: 1;
+  padding: 20px;
+}

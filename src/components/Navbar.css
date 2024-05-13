@@ -1,0 +1,90 @@
+/* Setările generale pentru Navbar */
+.navbar {
+  width: 100%; /* Lățime completă adaptată pentru dispozitive mobile */
+  background-color: #FFFFFF; /* Fundal alb */
+  color: #333; /* Text închis la culoare pentru contrast */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* O umbră ușoară pentru definiție */
+}
+
+/* Stiluri pentru cardul de profil */
+.profile-card {
+  width: 100%;
+  background-color: transparent; /* Fundal transparent */
+  padding: 20px 10px; /* Padding redus lateral */
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #E0E0E0; /* Linie subtilă pentru separare */
+}
+
+.profile-card:hover {
+  background-color: #F5F5F5; /* Schimbarea culorii de fundal la hover */
+}
+
+.profile-image {
+  width: 50px; /* Dimensiunea imaginii de profil */
+  height: 50px;
+  border-radius: 50%; /* Imaginea de profil rotundă */
+  margin-bottom: 5px;
+}
+
+.profile-info {
+  text-align: center; /* Centrarea textului sub imagine */
+}
+
+.profile-info .profile-name {
+  font-weight: bold; /* Numele utilizatorului îngroșat */
+  font-size: 16px; /* Mărimea fontului pentru nume */
+}
+
+/* Stiluri pentru linkurile din Navbar */
+.navbar-links ul {
+  width: 100%;
+  padding: 0;
+  list-style-type: none; /* Eliminarea punctelor de la liste */
+  margin: 0; /* Fără margini externe pentru a asigura alinierea */
+}
+
+.navbar-links li {
+  width: 100%;
+  padding: 10px 20px; /* Spațiere consistentă pentru fiecare element */
+  cursor: pointer; /* Cursor de tip pointer pentru feedback vizual */
+}
+
+.navbar-links li a {
+  text-decoration: none; /* Fără subliniere la link-uri */
+  color: inherit; /* Moștenirea culorii textului */
+  display: block; /* Facilitează click-ul pe întreaga zonă */
+  font-size: 14px; /* Mărimea fontului adaptată */
+}
+
+.navbar-links li.active,
+.navbar-links li:hover {
+  background-color: #FF4500; /* Fundal portocaliu pentru element activ sau hover */
+  color: white; /* Text alb pentru contrast */
+}
+
+/* Separarea elementelor 'Others' pentru a indica o secțiune diferită */
+.others {
+  margin-top: auto; /* Poziționare la finalul navbar-ului */
+  width: 100%;
+}
+
+.others li {
+  padding: 10px 20px; /* Consistent cu alte link-uri */
+  background-color: #F3F3F3; /* Un fundal ușor diferit pentru diferențiere */
+}
+
+.others li:hover,
+.others li.active {
+  background-color: #E1E1E1; /* Scurgere ușoară a culorii la hover */
+}
+
+.others li a {
+  color: #333; /* Asigură vizibilitatea și coerența */
+  font-size: 14px; /* Mărimea fontului adaptată */
+}
