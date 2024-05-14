@@ -1,19 +1,10 @@
-import express from 'express';
-import * as userService from '../services/userService';
+import { Router } from 'express';
+import { updateUserProfile } from '../controllers/userController';
+import { authMiddleware } from '../auth/authMiddleware';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/users', async (req, res) => {
-  try {
-    const user = await userService.createUser(req.body);
-    res.status(201).json(user);
-  } catch (error: unknown) { 
-    if (error instanceof Error) {  
-      res.status(400).json({ message: error.message });
-    } else {
-      res.status(400).json({ message: 'An unknown error occurred' });
-    }
-  }
-});
+// Define the route to update user profile
+router.put('/profile', authMiddleware, updateUserProfile);
 
 export default router;
