@@ -1,90 +1,156 @@
 /* Setările generale pentru Navbar */
 .navbar {
-  width: 100%; /* Lățime completă adaptată pentru dispozitive mobile */
-  background-color: #FFFFFF; /* Fundal alb */
-  color: #333; /* Text închis la culoare pentru contrast */
+  width: 26%;
+  background-color: #FFFFFF;
+  color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* O umbră ușoară pentru definiție */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 20px; /* Padding pentru a crea spațiu între margini și conținut */
+  box-sizing: border-box; /* Asigură că padding-ul este inclus în dimensiunea totală */
+  border-radius: 10px; /* Colțuri rotunjite pentru întreaga navbar */
+  height: 100vh; /* Înalțimea completă a ecranului pentru alinierea secțiunii Others */
 }
 
 /* Stiluri pentru cardul de profil */
 .profile-card {
   width: 100%;
-  background-color: transparent; /* Fundal transparent */
-  padding: 20px 10px; /* Padding redus lateral */
+  background-color: #E1E1E1; /* Culoarea gri pentru profil */
+  padding: 10px;
   cursor: pointer;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-bottom: 1px solid #E0E0E0; /* Linie subtilă pentru separare */
+  align-items: center; /* Aliniază imaginea și textul pe orizontală */
+  margin: 0 0 10px 0; /* Margină de jos pentru spațiere */
+  box-sizing: border-box;
+  border-radius: 10px; /* Colțuri rotunjite */
 }
 
 .profile-card:hover {
-  background-color: #F5F5F5; /* Schimbarea culorii de fundal la hover */
+  background-color: #ffffff;
 }
 
 .profile-image {
-  width: 50px; /* Dimensiunea imaginii de profil */
+  width: 50px;
   height: 50px;
-  border-radius: 50%; /* Imaginea de profil rotundă */
-  margin-bottom: 5px;
+  border-radius: 50%;
+  margin-right: 10px; /* Spațiere între imagine și text */
 }
 
 .profile-info {
-  text-align: center; /* Centrarea textului sub imagine */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Permite ca săgeata să fie aliniată la dreapta */
 }
 
 .profile-info .profile-name {
-  font-weight: bold; /* Numele utilizatorului îngroșat */
-  font-size: 16px; /* Mărimea fontului pentru nume */
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.profile-arrow {
+  color: #333; /* Culoarea săgeții */
+}
+
+/* Stiluri pentru Admins menu */
+.admins-menu {
+  width: 100%;
+  padding: 10px 0; /* Padding redus pentru spațiere apropiată */
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Margină de jos redusă */
+}
+
+.admins-menu-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-left: 10px; /* Aliniere la stânga */
 }
 
 /* Stiluri pentru linkurile din Navbar */
+.navbar-links {
+  width: 100%;
+}
+
 .navbar-links ul {
   width: 100%;
   padding: 0;
-  list-style-type: none; /* Eliminarea punctelor de la liste */
-  margin: 0; /* Fără margini externe pentru a asigura alinierea */
+  list-style-type: none;
+  margin: 0;
 }
 
 .navbar-links li {
   width: 100%;
-  padding: 10px 20px; /* Spațiere consistentă pentru fiecare element */
-  cursor: pointer; /* Cursor de tip pointer pentru feedback vizual */
+  padding: 10px 20px;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 10px; /* Colțuri rotunjite */
+  display: flex;
+  align-items: center;
 }
 
 .navbar-links li a {
-  text-decoration: none; /* Fără subliniere la link-uri */
-  color: inherit; /* Moștenirea culorii textului */
-  display: block; /* Facilitează click-ul pe întreaga zonă */
-  font-size: 14px; /* Mărimea fontului adaptată */
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.navbar-links li a .icon {
+  margin-right: 10px;
 }
 
 .navbar-links li.active,
 .navbar-links li:hover {
-  background-color: #FF4500; /* Fundal portocaliu pentru element activ sau hover */
-  color: white; /* Text alb pentru contrast */
+  background-color: #FF4500;
+  color: white;
 }
 
-/* Separarea elementelor 'Others' pentru a indica o secțiune diferită */
+/* Separarea elementelor 'Others' */
 .others {
   margin-top: auto; /* Poziționare la finalul navbar-ului */
   width: 100%;
+  padding: 10px 0; /* Padding redus pentru spațiere apropiată */
+}
+
+.others-title {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-left: 10px; /* Aliniere la stânga */
+}
+
+.others ul {
+  width: 100%;
+  padding: 0;
+  list-style-type: none;
+  margin: 0;
 }
 
 .others li {
-  padding: 10px 20px; /* Consistent cu alte link-uri */
-  background-color: #F3F3F3; /* Un fundal ușor diferit pentru diferențiere */
+  padding: 10px 20px;
+  background-color: #F3F3F3;
+  box-sizing: border-box;
+  border-radius: 10px; /* Colțuri rotunjite */
+  display: flex;
+  align-items: center;
 }
 
 .others li:hover,
 .others li.active {
-  background-color: #E1E1E1; /* Scurgere ușoară a culorii la hover */
+  background-color: #E1E1E1;
 }
 
 .others li a {
-  color: #333; /* Asigură vizibilitatea și coerența */
-  font-size: 14px; /* Mărimea fontului adaptată */
+  color: #333;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.others li a .icon {
+  margin-right: 10px;
 }
