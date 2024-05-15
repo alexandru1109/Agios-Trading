@@ -29,6 +29,12 @@ app.get('/api/protected', authMiddleware_1.default, (req, res) => {
 });
 app.use(errorMiddleware_1.default);
 const PORT = process.env.PORT || 5000;
+const LLAMA_API_URL = process.env.LLAMA_API_URL;
+if (!LLAMA_API_URL) {
+    console.error('LLAMA_API_URL is not set');
+    process.exit(1);
+}
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`Connecting to Ollama API at ${LLAMA_API_URL}`);
 });

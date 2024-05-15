@@ -6,27 +6,28 @@ dotenv.config();
 const LLAMA_API_URL = process.env.LLAMA_API_URL || 'http://192.168.0.178:11434';
 
 interface ChatbotResponse {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: Array<{
+  text: string | PromiseLike<string>;
+  data: {
     text: string;
-    index: number;
-    logprobs: any;
-    finish_reason: string;
-  }>;
+  };
 }
 
 export const getChatbotResponse = async (message: string): Promise<string> => {
   try {
-    const response = await axios.post<ChatbotResponse>(`${LLAMA_API_URL}/v1/engines/llama3/completions`, {
+    const response = await axios.post<ChatbotResponse>(`${LLAMA_API_URL}/api/generate`, {
+      model: 'llama3',
       prompt: message,
-      max_tokens: 4096,
+      options: {
+        num_ctx: 4096
+      }
     });
-    return response.data.choices[0].text;
+    return response.data.text;
   } catch (error) {
-    console.error('Error fetching chatbot response:', error);
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error:', error.message, error.response?.data);
+    } else {
+      console.error('Unexpected error:', error);
+    }
     throw new Error('Failed to fetch chatbot response');
   }
 };

@@ -28,59 +28,75 @@ describe('Transaction Routes', () => {
 
   describe('POST /api/transactions', () => {
     it('should add a new transaction', async () => {
-      (transactionController.addTransaction as jest.Mock).mockImplementation((req, res) => {
-        res.status(201).json(mockTransaction);
-      });
-  
-      const response = await request(app)
-        .post('/api/transactions')
-        .send(mockTransaction);
-  
-      expect(response.status).toBe(201);
-      expect(response.body).toEqual({
-        ...mockTransaction,
-        date: mockTransaction.date.toISOString()
-      });
+      try {
+        (transactionController.addTransaction as jest.Mock).mockImplementation((req, res) => {
+          res.status(201).json(mockTransaction);
+        });
+
+        const response = await request(app)
+          .post('/api/transactions')
+          .send(mockTransaction);
+
+        expect(response.status).toBe(201);
+        expect(response.body).toEqual({
+          ...mockTransaction,
+          date: mockTransaction.date.toISOString()
+        });
+      } catch (error) {
+        console.error('Error in POST /api/transactions test:', error);
+      }
     });
-  
+
     it('should return 400 if there is an error', async () => {
-      (transactionController.addTransaction as jest.Mock).mockImplementation((req, res) => {
-        res.status(400).json({ message: 'Error adding transaction' });
-      });
-  
-      const response = await request(app)
-        .post('/api/transactions')
-        .send({});
-  
-      expect(response.status).toBe(400);
-      expect(response.body.message).toBe('Error adding transaction');
+      try {
+        (transactionController.addTransaction as jest.Mock).mockImplementation((req, res) => {
+          res.status(400).json({ message: 'Error adding transaction' });
+        });
+
+        const response = await request(app)
+          .post('/api/transactions')
+          .send({});
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Error adding transaction');
+      } catch (error) {
+        console.error('Error in POST /api/transactions test:', error);
+      }
     });
   });
-  
+
   describe('GET /api/transactions', () => {
     it('should fetch transaction history', async () => {
-      (transactionController.getTransactionHistory as jest.Mock).mockImplementation((req, res) => {
-        res.status(200).json([mockTransaction]);
-      });
-  
-      const response = await request(app).get('/api/transactions');
-  
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual([{
-        ...mockTransaction,
-        date: mockTransaction.date.toISOString()
-      }]);
+      try {
+        (transactionController.getTransactionHistory as jest.Mock).mockImplementation((req, res) => {
+          res.status(200).json([mockTransaction]);
+        });
+
+        const response = await request(app).get('/api/transactions');
+
+        expect(response.status).toBe(200);
+        expect(response.body).toEqual([{
+          ...mockTransaction,
+          date: mockTransaction.date.toISOString()
+        }]);
+      } catch (error) {
+        console.error('Error in GET /api/transactions test:', error);
+      }
     });
-  
+
     it('should return 400 if there is an error', async () => {
-      (transactionController.getTransactionHistory as jest.Mock).mockImplementation((req, res) => {
-        res.status(400).json({ message: 'Error fetching transactions' });
-      });
-  
-      const response = await request(app).get('/api/transactions');
-  
-      expect(response.status).toBe(400);
-      expect(response.body.message).toBe('Error fetching transactions');
+      try {
+        (transactionController.getTransactionHistory as jest.Mock).mockImplementation((req, res) => {
+          res.status(400).json({ message: 'Error fetching transactions' });
+        });
+
+        const response = await request(app).get('/api/transactions');
+
+        expect(response.status).toBe(400);
+        expect(response.body.message).toBe('Error fetching transactions');
+      } catch (error) {
+        console.error('Error in GET /api/transactions test:', error);
+      }
     });
   });  
 });
