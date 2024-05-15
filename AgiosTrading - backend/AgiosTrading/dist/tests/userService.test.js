@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const userService_1 = require("../services/userService");
 const userModel_1 = __importDefault(require("../models/userModel"));
-jest.mock('../models/userModel'); // Ensure the path is correct
+jest.mock('../models/userModel');
 describe('User Service', () => {
     const mockUser = {
         _id: '1',

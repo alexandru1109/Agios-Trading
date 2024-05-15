@@ -1,7 +1,7 @@
 import { createUser, getAllUsers, getUserById, updateUser, deleteUser } from '../services/userService';
 import User, { IUser } from '../models/userModel';
 
-jest.mock('../models/userModel');
+jest.mock('../models/userModel'); 
 
 describe('User Service', () => {
   const mockUser: Partial<IUser> = {
