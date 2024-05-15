@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/userModel';
 
 export class AuthService {
-  // Funcția pentru înregistrarea unui nou utilizator
   static async register(username: string, email: string, password: string): Promise<IUser> {
     try {
       const salt = bcrypt.genSaltSync(10);
@@ -24,7 +23,6 @@ export class AuthService {
     }
   }
 
-  // Funcția pentru autentificarea unui utilizator
   static async login(email: string, password: string): Promise<string> {
     try {
       const user = await User.findOne({ email: email });

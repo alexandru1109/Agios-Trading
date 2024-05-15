@@ -1,12 +1,29 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
 const authService_1 = require("./authService");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const userModel_1 = __importDefault(require("../models/userModel"));
 // Controller pentru înregistrare
 const register = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
-        const user = await authService_1.AuthService.register(username, email, password);
+        const { name, email, password, role, strategy } = req.body;
+        const existingUser = await userModel_1.default.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('User already exists');
+        }
+        const passHash = await bcryptjs_1.default.hash(password, 10);
+        const user = new userModel_1.default({
+            name,
+            email,
+            passHash,
+            role,
+            strategy
+        });
+        await user.save();
         res.send({ user, message: 'User registered successfully' });
     }
     catch (error) {
@@ -19,7 +36,6 @@ const register = async (req, res) => {
     }
 };
 exports.register = register;
-// Controller pentru autentificare
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;

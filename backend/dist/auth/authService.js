@@ -8,7 +8,6 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const userModel_1 = __importDefault(require("../models/userModel"));
 class AuthService {
-    // Funcția pentru înregistrarea unui nou utilizator
     static async register(username, email, password) {
         try {
             const salt = bcryptjs_1.default.genSaltSync(10);
@@ -27,7 +26,6 @@ class AuthService {
             throw error;
         }
     }
-    // Funcția pentru autentificarea unui utilizator
     static async login(email, password) {
         try {
             const user = await userModel_1.default.findOne({ email: email });

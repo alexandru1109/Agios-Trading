@@ -14,36 +14,54 @@ app.post('/api/chat', chatbotController_1.chatWithBot);
 // Mock-uiește funcția getChatbotResponse
 jest.mock('../services/llamaService');
 describe('Chatbot Controller', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
     it('should return 200 and bot response when message is provided', async () => {
         // Setează răspunsul mock pentru getChatbotResponse
         const mockResponse = 'Hello, this is a bot response';
         llamaService_1.getChatbotResponse.mockResolvedValue(mockResponse);
-        // Trimite o cerere POST către endpoint-ul de chat
-        const response = await (0, supertest_1.default)(app)
-            .post('/api/chat')
-            .send({ message: 'Hello bot' });
-        // Verifică răspunsul
-        expect(response.status).toBe(200);
-        expect(response.body.response).toBe(mockResponse);
+        try {
+            // Trimite o cerere POST către endpoint-ul de chat
+            const response = await (0, supertest_1.default)(app)
+                .post('/api/chat')
+                .send({ message: 'Hello bot' });
+            // Verifică răspunsul
+            expect(response.status).toBe(200);
+            expect(response.body.response).toBe(mockResponse);
+        }
+        catch (error) {
+            fail('Unexpected error occurred: ' + error.message);
+        }
     });
     it('should return 400 when message is not provided', async () => {
-        // Trimite o cerere POST fără mesaj
-        const response = await (0, supertest_1.default)(app)
-            .post('/api/chat')
-            .send({});
-        // Verifică răspunsul
-        expect(response.status).toBe(400);
-        expect(response.body.message).toBe('Message is required');
+        try {
+            // Trimite o cerere POST fără mesaj
+            const response = await (0, supertest_1.default)(app)
+                .post('/api/chat')
+                .send({});
+            // Verifică răspunsul
+            expect(response.status).toBe(400);
+            expect(response.body.message).toBe('Message is required');
+        }
+        catch (error) {
+            fail('Unexpected error occurred: ' + error.message);
+        }
     });
     it('should return 500 when there is an error with the chatbot service', async () => {
         // Setează răspunsul mock pentru getChatbotResponse să arunce o eroare
         llamaService_1.getChatbotResponse.mockRejectedValue(new Error('Service error'));
-        // Trimite o cerere POST cu un mesaj
-        const response = await (0, supertest_1.default)(app)
-            .post('/api/chat')
-            .send({ message: 'Hello bot' });
-        // Verifică răspunsul
-        expect(response.status).toBe(500);
-        expect(response.body.message).toBe('Error chatting with bot');
+        try {
+            // Trimite o cerere POST cu un mesaj
+            const response = await (0, supertest_1.default)(app)
+                .post('/api/chat')
+                .send({ message: 'Hello bot' });
+            // Verifică răspunsul
+            expect(response.status).toBe(500);
+            expect(response.body.message).toBe('Error chatting with bot');
+        }
+        catch (error) {
+            fail('Unexpected error occurred: ' + error.message);
+        }
     });
 });

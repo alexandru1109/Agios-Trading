@@ -5,7 +5,8 @@ import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/Main/PrivateRoute';
 import Login from './components/Auth/Login';
 import Home from './pages/Home';
-import './App.css';
+import './App.css'; // Asigură-te că această cale este corectă
+import './index.css';
 
 const App: React.FC = () => {
     return (
