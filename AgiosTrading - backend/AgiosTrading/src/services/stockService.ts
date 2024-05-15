@@ -1,15 +1,38 @@
-import axios from 'axios';
+import Market from '../models/stockModel';
+import alphaVantageService from '../alphaVantageService';
 
-const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
-const BASE_URL = 'https://www.alphavantage.co/query';
+class StockService {
+  async getStockData(symbol: string) {
+    let stock = await Market.findOne({ symbol });
+    if (!stock) {
+      const apiData = await alphaVantageService.getStockData(symbol);
+      const indicators = await alphaVantageService.getStockIndicators(symbol);
+      
+      const newStockData = {
+        symbol: symbol,
+        history: apiData['Time Series (Daily)'], 
+        indicators: indicators,
+      };
 
-export const getStockData = async (symbol: string) => {
-    const url = `${BASE_URL}?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=5min&apikey=${API_KEY}`;
-    try {
-        const response = await axios.get(url);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching stock data:', error);
-        throw error;
+      stock = new Market(newStockData);
+      await stock.save();
     }
-};
+    return stock;
+  }
+
+  async updateStockData(symbol: string, data: any) {
+    const stock = await Market.findOneAndUpdate({ symbol }, data, { new: true });
+    if (!stock) {
+      throw new Error('Stock not found');
+    }
+    return stock;
+  }
+
+  async createStockData(data: any) {
+    const stock = new Market(data);
+    await stock.save();
+    return stock;
+  }
+}
+
+export default new StockService();

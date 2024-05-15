@@ -1,12 +1,41 @@
 import { Request, Response } from 'express';
-import { getStockData } from '../services/stockService';
+import stockService from '../services/stockService';
 
-export const fetchStockData = async (req: Request, res: Response) => {
-    const { symbol } = req.params;
+class StockController {
+  async getStockData(req: Request, res: Response) {
     try {
-        const data = await getStockData(symbol);
-        res.status(200).json(data);
+      const data = await stockService.getStockData(req.params.symbol);
+      res.status(200).json(data);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch stock data' });
+      this.handleError(res, error);
     }
-};
+  }
+
+  async updateStockData(req: Request, res: Response) {
+    try {
+      const updatedData = await stockService.updateStockData(req.params.symbol, req.body);
+      res.status(200).json(updatedData);
+    } catch (error) {
+      this.handleError(res, error);
+    }
+  }
+
+  async createStockData(req: Request, res: Response) {
+    try {
+      const newStock = await stockService.createStockData(req.body);
+      res.status(201).json(newStock);
+    } catch (error) {
+      this.handleError(res, error);
+    }
+  }
+
+  private handleError(res: Response, error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ message: error.message });
+    } else {
+      res.status(500).json({ message: 'An unknown error occurred' });
+    }
+  }
+}
+
+export default new StockController();
