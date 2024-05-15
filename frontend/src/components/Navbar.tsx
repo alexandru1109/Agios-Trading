@@ -20,23 +20,40 @@ const Navbar = () => {
             </div>
             <div className="navbar-links">
                 <ul>
-                    <li className="active"><a href="#"><FaTachometerAlt className="icon" /> Dashboard</a></li>
-                    <li><a href="#"><FaBuilding className="icon" /> Business Info</a></li>
-                    <li><a href="#"><FaUsers className="icon" /> Clients</a></li>
-                    <li><a href="#"><FaBox className="icon" /> Products</a></li>
-                    <li><a href="#"><FaDollarSign className="icon" /> Balance</a></li>
-                </ul>
-            </div>
-            <div className="others">
-                <div className="others-title">
-                    <span>Others</span>
-                </div>
-                <ul>
-                    <li><a href="#"><FaCog className="icon" /> Setting</a></li>
+                    <li className="active">
+                        <a href="#">
+                            <FaTachometerAlt className="icon" /> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaBuilding className="icon" /> Business Info
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaUsers className="icon" /> Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaBox className="icon" /> Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaDollarSign className="icon" /> Sales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <FaCog className="icon" /> Settings
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     );
-}
+};
 
 export default Navbar;

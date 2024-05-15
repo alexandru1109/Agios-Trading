@@ -16,27 +16,13 @@ describe('Llama Service', () => {
         consoleErrorSpy.mockRestore();
     });
     it('should return chatbot response for a valid message', async () => {
-        const mockResponse = {
-            data: {
-                id: 'cmpl-3evwGCZy94dt9vM3RlkQ',
-                object: 'text_completion',
-                created: 1632910234,
-                model: 'llama3:latest',
-                choices: [
-                    {
-                        text: 'Hello, this is a bot response',
-                        index: 0,
-                        logprobs: null,
-                        finish_reason: 'stop',
-                    },
-                ],
-            },
-        };
+        const mockResponse = { data: 'Hello, this is a bot response' };
         axios_1.default.post.mockResolvedValue(mockResponse);
         const response = await (0, llamaService_1.getChatbotResponse)('Hello bot');
-        expect(response).toEqual(mockResponse.data.choices[0].text);
-        expect(axios_1.default.post).toHaveBeenCalledWith(`${LLAMA_API_URL}/v1/engines/llama3/completions`, {
+        expect(response).toEqual(mockResponse.data);
+        expect(axios_1.default.post).toHaveBeenCalledWith(`${LLAMA_API_URL}/chat`, {
             prompt: 'Hello bot',
+            model: 'llama3:latest',
             max_tokens: 4096,
         });
     });
@@ -47,7 +33,7 @@ describe('Llama Service', () => {
     });
     it('should connect to the Ollama API', async () => {
         try {
-            const response = await axios_1.default.post(`${LLAMA_API_URL}/v1/engines/llama3/completions`, {
+            const response = await axios_1.default.post(`${LLAMA_API_URL}/chat`, {
                 prompt: 'Hello',
                 model: 'llama3:latest',
                 max_tokens: 10,
