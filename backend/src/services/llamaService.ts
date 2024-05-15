@@ -3,16 +3,25 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const LLAMA_API_URL = process.env.LLAMA_API_URL || 'http://192.168.0.178:11434';
+const LLAMA_API_URL = process.env.LLAMA_API_URL || '';
+
+interface ChatbotResponseData {
+  text: string;
+}
 
 interface ChatbotResponse {
   text: string | PromiseLike<string>;
-  data: {
-    text: string;
-  };
+  data: ChatbotResponseData;
 }
 
 export const getChatbotResponse = async (message: string): Promise<string> => {
+  if (!LLAMA_API_URL) {
+    console.error('LLAMA_API_URL is not set');
+    throw new Error('LLAMA_API_URL is not set');
+  }
+
+  console.log('Sending request to Ollama API:', LLAMA_API_URL);
+
   try {
     const response = await axios.post<ChatbotResponse>(`${LLAMA_API_URL}/api/generate`, {
       model: 'llama3',
@@ -21,6 +30,14 @@ export const getChatbotResponse = async (message: string): Promise<string> => {
         num_ctx: 4096
       }
     });
+    console.log('Request payload:', {
+      model: 'llama3',
+      prompt: message,
+      options: {
+        num_ctx: 4096
+      }
+    });
+    console.log('Response from Ollama API:', response.data);
     return response.data.text;
   } catch (error) {
     if (axios.isAxiosError(error)) {

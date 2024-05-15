@@ -1,7 +1,64 @@
+/* src/components/Auth/Login.css */
 .login-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    background: linear-gradient(135deg, #7f00ff, #e100ff);
+    color: white;
+}
+
+.login-form {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.login-form label {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form input {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    margin-top: 0.5rem;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.login-options a {
+    color: #b3b3b3;
+    text-decoration: none;
+}
+
+.login-form button {
+    padding: 0.75rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.login-form p {
+    margin-top: 1rem;
+    text-align: center;
 }

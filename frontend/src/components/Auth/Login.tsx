@@ -1,34 +1,60 @@
-import React, { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
-import LoginCard from './LoginCard';
+// src/components/Auth/Login.tsx
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 import './Login.css';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const auth = useAuth();
+    const navigate = useNavigate();
+    const authContext = useContext(AuthContext);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        auth?.login(username, password);
+    if (!authContext) {
+        return null; // Sau puteți afișa un mesaj de eroare
+    }
+
+    const { login } = authContext;
+
+    const handleLogin = async (event: React.FormEvent) => {
+        event.preventDefault();
+        await login(username, password);
+        navigate('/home');
     };
 
     return (
         <div className="login-container">
-            <LoginCard>
-                <h2>Login</h2>
-                <form onSubmit={handleSubmit}>
+            <h1>Welcome to the website</h1>
+            <form onSubmit={handleLogin} className="login-form">
+                <label>
+                    User Name
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </label>
+                <div className="login-options">
                     <label>
-                        Username:
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+                        <input type="checkbox" /> Remember me
                     </label>
-                    <label>
-                        Password:
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </label>
-                    <button type="submit">Login</button>
-                </form>
-            </LoginCard>
+                    <a href="/forgot-password">Forgot Password?</a>
+                </div>
+                <button type="submit">Login</button>
+                <p>
+                    To create a new account, <a href="/register">Click here</a>
+                </p>
+            </form>
         </div>
     );
 };

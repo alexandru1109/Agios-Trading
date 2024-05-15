@@ -7,9 +7,14 @@ exports.getChatbotResponse = void 0;
 const axios_1 = __importDefault(require("axios"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const LLAMA_API_URL = process.env.LLAMA_API_URL || 'http://192.168.0.178:11434';
+const LLAMA_API_URL = process.env.LLAMA_API_URL || '';
 const getChatbotResponse = async (message) => {
     var _a;
+    if (!LLAMA_API_URL) {
+        console.error('LLAMA_API_URL is not set');
+        throw new Error('LLAMA_API_URL is not set');
+    }
+    console.log('Sending request to Ollama API:', LLAMA_API_URL);
     try {
         const response = await axios_1.default.post(`${LLAMA_API_URL}/api/generate`, {
             model: 'llama3',
@@ -18,6 +23,14 @@ const getChatbotResponse = async (message) => {
                 num_ctx: 4096
             }
         });
+        console.log('Request payload:', {
+            model: 'llama3',
+            prompt: message,
+            options: {
+                num_ctx: 4096
+            }
+        });
+        console.log('Response from Ollama API:', response.data);
         return response.data.text;
     }
     catch (error) {
