@@ -8,6 +8,7 @@ import transactionRoutes from './routes/transactionRoutes';
 import userRoutes from './routes/userRoutes';
 import authMiddleware from './auth/authMiddleware';
 import errorMiddleware from './middlewares/errorMiddleware';
+import chatbotRoutes from './routes/chatbotRoutes';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/stocks', stockRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 app.get('/api/protected', authMiddleware, (req, res) => {
   res.send('This is a protected route');

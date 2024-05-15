@@ -13,6 +13,7 @@ const transactionRoutes_1 = __importDefault(require("./routes/transactionRoutes"
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const authMiddleware_1 = __importDefault(require("./auth/authMiddleware"));
 const errorMiddleware_1 = __importDefault(require("./middlewares/errorMiddleware"));
+const chatbotRoutes_1 = __importDefault(require("./routes/chatbotRoutes"));
 dotenv_1.default.config();
 (0, dbConnection_1.default)();
 const app = (0, express_1.default)();
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes_1.default);
 app.use('/api/stocks', stockRoutes_1.default);
 app.use('/api/transactions', transactionRoutes_1.default);
 app.use('/api/users', userRoutes_1.default);
+app.use('/api/chatbot', chatbotRoutes_1.default);
 app.get('/api/protected', authMiddleware_1.default, (req, res) => {
     res.send('This is a protected route');
 });
