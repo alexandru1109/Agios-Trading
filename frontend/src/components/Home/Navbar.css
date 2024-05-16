@@ -1,41 +1,20 @@
-/* Setările generale pentru Navbar */
 .navbar {
-    width: 26%;
-    background-color: #FFFFFF;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    background: #fff;
     padding: 20px;
-    /* Padding pentru a crea spațiu între margini și conținut */
-    box-sizing: border-box;
-    /* Asigură că padding-ul este inclus în dimensiunea totală */
-    border-radius: 10px;
-    /* Colțuri rotunjite pentru întreaga navbar */
-    height: 100vh;
-    /* Înalțimea completă a ecranului pentru alinierea secțiunii Others */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Stiluri pentru cardul de profil */
 .profile-card {
-    width: 100%;
-    background-color: #E1E1E1;
-    /* Culoarea gri pentru profil */
-    padding: 10px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    /* Aliniază imaginea și textul pe orizontală */
-    margin: 0 0 10px 0;
-    /* Margină de jos pentru spațiere */
-    box-sizing: border-box;
-    border-radius: 10px;
-    /* Colțuri rotunjite */
+    margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .profile-card:hover {
-    background-color: #ffffff;
+    background-color: #f0f0f0;
+    border-radius: 10px;
 }
 
 .profile-image {
@@ -43,133 +22,61 @@
     height: 50px;
     border-radius: 50%;
     margin-right: 10px;
-    /* Spațiere între imagine și text */
 }
 
 .profile-info {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    /* Permite ca săgeata să fie aliniată la dreapta */
 }
 
-.profile-info .profile-name {
+.profile-name {
+    font-size: 18px;
     font-weight: bold;
-    font-size: 20px;
+}
+
+.profile-title {
+    font-size: 14px;
+    color: #666;
 }
 
 .profile-arrow {
-    color: #333;
-    /* Culoarea săgeții */
-}
-
-/* Stiluri pentru Admins menu */
-.admins-menu {
-    width: 100%;
-    padding: 10px 0;
-    /* Padding redus pentru spațiere apropiată */
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-    /* Margină de jos redusă */
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
 }
 
 .admins-menu-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-left: 10px;
-    /* Aliniere la stânga */
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
 }
 
-/* Stiluri pentru linkurile din Navbar */
 .navbar-links {
-    width: 100%;
-}
-
-.navbar-links ul {
-    width: 100%;
+    list-style: none;
     padding: 0;
-    list-style-type: none;
-    margin: 0;
 }
 
 .navbar-links li {
-    width: 100%;
-    padding: 10px 20px;
-    cursor: pointer;
-    box-sizing: border-box;
-    border-radius: 10px;
-    /* Colțuri rotunjite */
-    display: flex;
-    align-items: center;
+    margin-bottom: 20px;
 }
 
-.navbar-links li a {
+.navbar-links a {
     text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
     font-size: 16px;
-}
-
-.navbar-links li a .icon {
-    margin-right: 10px;
-}
-
-.navbar-links li.active,
-.navbar-links li:hover {
-    background-color: #FF4500;
-    color: white;
-}
-
-/* Separarea elementelor 'Others' */
-.others {
-    margin-top: auto;
-    /* Poziționare la finalul navbar-ului */
-    width: 100%;
-    padding: 10px 0;
-    /* Padding redus pentru spațiere apropiată */
-}
-
-.others-title {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: bold;
     color: #333;
-    margin-left: 10px;
-    /* Aliniere la stânga */
-}
-
-.others ul {
-    width: 100%;
-    padding: 0;
-    list-style-type: none;
-    margin: 0;
-}
-
-.others li {
-    padding: 10px 20px;
-    background-color: #F3F3F3;
-    box-sizing: border-box;
-    border-radius: 10px;
-    /* Colțuri rotunjite */
     display: flex;
     align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.others li:hover,
-.others li.active {
-    background-color: #E1E1E1;
+.navbar-links a:hover,
+.navbar-links li.active a {
+    background-color: #ff5722;
+    color: #fff;
 }
 
-.others li a {
-    color: #333;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-}
-
-.others li a .icon {
-    margin-right: 10px;
+.navbar-links a .icon {
+    font-size: 20px;
 }

@@ -5,16 +5,19 @@ interface CardProps {
     title: string;
     value: string;
     change: string;
+    color: 'yellow' | 'red' | 'orange';
 }
 
-const Card = ({ data }: { data: CardProps }) => {
+const Card: React.FC<CardProps> = ({ title, value, change, color }) => {
     return (
-        <div className={`card ${data.change.startsWith('-') ? 'negative' : 'positive'}`}>
-            <h1>{data.title}</h1>
-            <p>{data.value}</p>
-            <span>{data.change}</span>
+        <div className={`card ${color}`}>
+            <h3>{title}</h3>
+            <div className="card-info">
+                <span className="card-value">{value}</span>
+                <span className="card-change">{change}</span>
+            </div>
         </div>
     );
-}
+};
 
 export default Card;

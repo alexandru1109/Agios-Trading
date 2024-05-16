@@ -1,34 +1,40 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
 import bcrypt from 'bcryptjs';
 
-export const updateUserProfile = async (req: Request, res: Response) => {
-  const userId = (req.user as jwt.JwtPayload).id; 
-  const { name, email, password } = req.body;
-
+export const getUserProfile = async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(req.user?.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching user profile', error });
+  }
+};
 
+export const updateUserProfile = async (req: Request, res: Response) => {
+  try {
+    const { name, email, password, role, strategy } = req.body;
+
+    const user = await User.findById(req.user?.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (name) user.name = name;
-    if (email) user.email = email;
-    if (password) user.passHash = await bcrypt.hash(password, 10);
+    user.name = name || user.name;
+    user.email = email || user.email;
+    user.role = role || user.role;
+    user.strategy = strategy || user.strategy;
 
-    await user.save();
+    if (password) {
+      user.passHash = await bcrypt.hash(password, 10);
+    }
 
-    res.status(200).json({
-      message: 'Profile updated successfully',
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email
-      }
-    });
+    const updatedUser = await user.save();
+    res.json(updatedUser);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating profile', error });
+    res.status(500).json({ message: 'Error updating user profile', error });
   }
 };

@@ -1,25 +1,24 @@
 import React from 'react';
+import profileImage from '../../../public/profile.png';
 import './Navbar.css';
 import { FaTachometerAlt, FaBuilding, FaUsers, FaBox, FaDollarSign, FaCog, FaChevronDown } from 'react-icons/fa';
 
-const Navbar = () => {
+const Navbar: React.FC = () => {
     return (
-        <div className="navbar">
+        <nav className="navbar">
             <div className="profile-card">
-                <img className="profile-image" src="profile-image.jpg" alt="Profile" />
+                <img className="profile-image" src={profileImage} alt="Profile" />
                 <div className="profile-info">
                     <div className="profile-name">Hana</div>
                     <div className="profile-title">CEO</div>
+                    <FaChevronDown className="profile-arrow" />
                 </div>
-                <FaChevronDown className="profile-arrow" />
             </div>
             <div className="admins-menu">
                 <div className="admins-menu-title">
                     <span>Admins menu</span>
                 </div>
-            </div>
-            <div className="navbar-links">
-                <ul>
+                <ul className="navbar-links">
                     <li className="active">
                         <a href="#">
                             <FaTachometerAlt className="icon" /> Dashboard
@@ -32,7 +31,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <a href="#">
-                            <FaUsers className="icon" /> Users
+                            <FaUsers className="icon" /> Clients
                         </a>
                     </li>
                     <li>
@@ -42,7 +41,7 @@ const Navbar = () => {
                     </li>
                     <li>
                         <a href="#">
-                            <FaDollarSign className="icon" /> Sales
+                            <FaDollarSign className="icon" /> Balance
                         </a>
                     </li>
                     <li>
@@ -52,7 +51,7 @@ const Navbar = () => {
                     </li>
                 </ul>
             </div>
-        </div>
+        </nav>
     );
 };
 

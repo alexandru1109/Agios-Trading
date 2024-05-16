@@ -1,17 +1,24 @@
 import { Request, Response } from 'express';
 import Transaction from '../models/transactionModel';
 
-interface Portfolio {
-  [symbol: string]: {
-    quantity: number;
-    avgPrice: number;
-    totalInvested: number;
-  };
+interface PortfolioData {
+  symbol: string;
+  quantity: number;
+  avgPrice: number;
+  totalInvested: number;
+  currentPrice?: number;
 }
 
-export const getPortfolio = async (req: Request, res: Response) => {
-  const userId = req.user?.id;
+interface GraphData {
+  labels: string[];
+  datasets: {
+    label: string;
+    data: number[];
+  }[];
+}
 
+export const getPortfolioGraphData = async (req: Request, res: Response) => {
+  const userId = req.user?.id;
   if (!userId) {
     return res.status(400).json({ message: 'User ID not found' });
   }
@@ -19,11 +26,11 @@ export const getPortfolio = async (req: Request, res: Response) => {
   try {
     const transactions = await Transaction.find({ userId });
 
-    const portfolio: Portfolio = transactions.reduce<Portfolio>((acc, transaction) => {
+    const portfolio = transactions.reduce<{ [symbol: string]: PortfolioData }>((acc, transaction) => {
       const { symbol, quantity, price, type } = transaction;
 
       if (!acc[symbol]) {
-        acc[symbol] = { quantity: 0, avgPrice: 0, totalInvested: 0 };
+        acc[symbol] = { symbol, quantity: 0, avgPrice: 0, totalInvested: 0 };
       }
 
       if (type === 'buy') {
@@ -39,8 +46,22 @@ export const getPortfolio = async (req: Request, res: Response) => {
       return acc;
     }, {});
 
-    res.status(200).json(portfolio);
+    const graphData: GraphData = {
+      labels: Object.keys(portfolio),
+      datasets: [
+        {
+          label: 'Total Invested',
+          data: Object.values(portfolio).map(p => p.totalInvested),
+        },
+        {
+          label: 'Average Price',
+          data: Object.values(portfolio).map(p => p.avgPrice),
+        },
+      ],
+    };
+
+    res.status(200).json(graphData);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching portfolio', error });
+    res.status(500).json({ message: 'Error fetching portfolio graph data', error });
   }
 };
