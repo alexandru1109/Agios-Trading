@@ -1,12 +1,12 @@
 import express from 'express';
-import * as authController from '../auth/authController';
+import { register, login } from '../auth/authController';
 
 const router = express.Router();
 
 // Ruta pentru înregistrarea utilizatorilor
-router.post('/register', authController.register);
+router.post('/register', register);
 
 // Ruta pentru autentificarea utilizatorilor
-router.post('/login', authController.login);
+router.post('/login', login);
 
 export default router;

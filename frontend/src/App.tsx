@@ -1,11 +1,10 @@
-// src/App.tsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import PrivateRoute from './components/Main/PrivateRoute';
 import Login from './components/Auth/Login';
 import Home from './pages/Home';
-import './App.css'; // Asigură-te că această cale este corectă
+import './App.css';
 import './index.css';
 
 const App: React.FC = () => {

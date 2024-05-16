@@ -1,47 +1,43 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/userModel';
+import jwt from 'jsonwebtoken';
 
-export class AuthService {
-  static async register(username: string, email: string, password: string): Promise<IUser> {
-    try {
-      const salt = bcrypt.genSaltSync(10);
-      const hashedPassword = bcrypt.hashSync(password, salt);
-
-      const user = new User({
-        name: username,  
-        email: email,
-        passHash: hashedPassword, 
-        role: 'defaultRole',       
-        strategy: 'local'       
-      });
-
-      await user.save();
-      return user;
-    } catch (error) {
-      throw error;
+class AuthService {
+  public async register(name: string, email: string, password: string, role: string, strategy: string): Promise<IUser> {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      throw new Error('User already exists');
     }
+
+    const passHash = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      name,
+      email,
+      passHash,
+      role,
+      strategy
+    });
+
+    await user.save();
+    return user;
   }
 
-  static async login(email: string, password: string): Promise<string> {
-    try {
-      const user = await User.findOne({ email: email });
-      if (!user) {
-        throw new Error('User not found');
-      }
-      const isMatch = bcrypt.compareSync(password, user.passHash);
-      if (!isMatch) {
-        throw new Error('Invalid credentials');
-      }
-      const payload = {
-        userId: user._id,
-        email: user.email
-      };
-      const token = jwt.sign(payload, process.env.JWT_SECRET || '', { expiresIn: '1d' });
-      return token;
-    } catch (error) {
-      throw error;
+  public async login(email: string, password: string): Promise<string> {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw new Error('Invalid email or password');
     }
+
+    const isMatch = await bcrypt.compare(password, user.passHash);
+    if (!isMatch) {
+      throw new Error('Invalid email or password');
+    }
+    
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
+
+    return token;
   }
-  
 }
+
+export default new AuthService();
