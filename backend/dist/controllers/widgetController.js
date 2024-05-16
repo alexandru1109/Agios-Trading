@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCustomWidgets = void 0;
 const axios_1 = __importDefault(require("axios"));
-const STOCK_API_URL = 'https://www.alphavantage.co/query';
+const STOCK_API_URL = 'https://finnhub.io/api/v1';
 const STOCK_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 const getCustomWidgets = async (req, res) => {
     const { symbols } = req.body;

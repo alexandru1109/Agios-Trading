@@ -1,3 +1,4 @@
+// Card.tsx
 import React from 'react';
 import './Card.css';
 
@@ -5,17 +6,15 @@ interface CardProps {
     title: string;
     value: string;
     change: string;
-    color: 'green' | 'red';
+    color: string;
 }
 
 const Card: React.FC<CardProps> = ({ title, value, change, color }) => {
     return (
-        <div className={`card ${color}`}>
+        <div className="card">
             <h3>{title}</h3>
-            <div className="card-info">
-                <span className="card-value">{value}</span>
-                <span className="card-change">{change}</span>
-            </div>
+            <p className="value">{value}</p>
+            <p className="change" style={{ color }}>{change}</p>
         </div>
     );
 };

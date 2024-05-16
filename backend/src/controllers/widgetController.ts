@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 
-const STOCK_API_URL = 'https://www.alphavantage.co/query';
+const STOCK_API_URL = 'https://finnhub.io/api/v1';
 const STOCK_API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
 
 export const getCustomWidgets = async (req: Request, res: Response) => {

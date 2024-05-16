@@ -4,5 +4,6 @@ const express_1 = require("express");
 const marketController_1 = require("../controllers/marketController");
 const router = (0, express_1.Router)();
 router.get('/market-summary', marketController_1.getMarketSummary);
+router.get('/market-summary10', marketController_1.getMarketSummary10);
 router.get('/market-news', marketController_1.getMarketNews);
 exports.default = router;

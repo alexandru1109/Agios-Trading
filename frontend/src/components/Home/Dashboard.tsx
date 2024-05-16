@@ -5,10 +5,12 @@ import Card from './Card';
 import Chart from './Chart';
 
 interface Stock {
-    '01. symbol': string;
-    '05. price': string;
-    '09. change': string;
-    '10. change percent': string;
+    symbol: string;
+    currentPrice: number;
+    highPrice: number;
+    lowPrice: number;
+    openPrice: number;
+    previousClosePrice: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -19,7 +21,7 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         const fetchMarketSummary = async () => {
             try {
-                const response = await axios.get('/market/market-summary');
+                const response = await axios.get('market/market-summary');
                 setStocks(response.data.stocks);
                 setIsLoading(false);
             } catch (error) {
@@ -50,21 +52,16 @@ const Dashboard: React.FC = () => {
                     stocks.map((stock, index) => (
                         <Card
                             key={index}
-                            title={stock['01. symbol']}
-                            value={`$${stock['05. price']}`}
-                            change={`${stock['09. change']} (${stock['10. change percent']})`}
-                            color={parseFloat(stock['09. change']) > 0 ? 'green' : 'red'}
+                            title={stock.symbol}
+                            value={`$${stock.currentPrice.toFixed(2)}`}
+                            change={`$${(stock.currentPrice - stock.previousClosePrice).toFixed(2)} (${((stock.currentPrice - stock.previousClosePrice) / stock.previousClosePrice * 100).toFixed(2)}%)`}
+                            color={stock.currentPrice > stock.previousClosePrice ? 'green' : 'red'}
                         />
                     ))
                 )}
             </div>
             <div className="chart-container">
                 <Chart />
-                <div className="chart-buttons">
-                    <button>Weekly</button>
-                    <button className="active">Monthly</button>
-                    <button>Quarterly</button>
-                </div>
             </div>
         </div>
     );

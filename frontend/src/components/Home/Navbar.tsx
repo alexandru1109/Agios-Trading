@@ -31,12 +31,7 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="#">
-                            <FaUsers className="icon" /> Clients
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#">
+                        <Link to="/stocks">
                             <FaBox className="icon" /> Products
                         </Link>
                     </li>

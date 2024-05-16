@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import './App.css';
 import BusinessNews from './pages/BusinessNews';
+import StockList10 from './pages/Products';
 
 const App: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/" element={<Login />} />
                 <Route path="/news" element={<BusinessNews />} />
+                <Route path="/stocks" element={<StockList10 />} />
             </Routes>
         </Router>
     );
