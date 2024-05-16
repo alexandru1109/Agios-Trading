@@ -1,40 +1,30 @@
 .card {
     flex: 1;
+    margin: 0 10px;
     padding: 20px;
     border-radius: 10px;
     color: white;
-    margin: 10px;
-    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.card.yellow {
-    background-color: #ffcc00;
+.card.positive {
+    background-color: #ff8c00;
 }
 
-.card.red {
-    background-color: #ff4d4d;
+.card.negative {
+    background-color: #dc143c;
 }
 
-.card.light-red {
-    background-color: #ff9999;
+.card h1 {
+    font-size: 20px;
+    margin: 0 0 10px 0;
 }
 
-.card.orange {
-    background-color: #ff9933;
+.card p {
+    font-size: 36px;
+    margin: 0;
 }
 
-.card.blue {
-    background-color: #3399ff;
-}
-
-.card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.card-content p {
-    font-size: 24px;
-    font-weight: bold;
+.card span {
+    font-size: 16px;
 }
