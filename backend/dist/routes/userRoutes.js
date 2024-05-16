@@ -8,5 +8,5 @@ const userController_1 = require("../controllers/userController");
 const authMiddleware_1 = __importDefault(require("../auth/authMiddleware"));
 const router = (0, express_1.Router)();
 router.get('/profile', authMiddleware_1.default, userController_1.getUserProfile);
-router.put('/profile', authMiddleware_1.default, userController_1.updateUserProfile);
+router.put('/update', authMiddleware_1.default, userController_1.updateUserProfile);
 exports.default = router;

@@ -1,0 +1,33 @@
+.business-news {
+    padding: 20px;
+}
+
+.business-news h1 {
+    margin-bottom: 20px;
+}
+
+.business-news ul {
+    list-style: none;
+    padding: 0;
+}
+
+.business-news li {
+    margin-bottom: 20px;
+}
+
+.business-news a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.business-news a:hover h2 {
+    text-decoration: underline;
+}
+
+.business-news h2 {
+    margin: 0;
+}
+
+.business-news p {
+    margin: 5px 0 0 0;
+}

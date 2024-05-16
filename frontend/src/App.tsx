@@ -6,6 +6,7 @@ import ForgotPassword from './components/Auth/ForgotPassword';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import './App.css';
+import BusinessNews from './pages/BusinessNews';
 
 const App: React.FC = () => {
     return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/" element={<Login />} />
+                <Route path="/news" element={<BusinessNews />} />
             </Routes>
         </Router>
     );

@@ -5,7 +5,7 @@ interface CardProps {
     title: string;
     value: string;
     change: string;
-    color: 'yellow' | 'red' | 'orange';
+    color: 'green' | 'red';
 }
 
 const Card: React.FC<CardProps> = ({ title, value, change, color }) => {

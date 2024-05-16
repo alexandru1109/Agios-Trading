@@ -26,8 +26,8 @@ const Navbar = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="#">
-                            <FaBuilding className="icon" /> Business Info
+                        <Link to="/news">
+                            <FaBuilding className="icon" /> Business News
                         </Link>
                     </li>
                     <li>

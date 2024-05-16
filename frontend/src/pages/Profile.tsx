@@ -25,10 +25,9 @@ const Profile: React.FC = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const userId = localStorage.getItem('userId');
                 const token = localStorage.getItem('authToken');
-                if (userId && token) {
-                    const response = await axios.get(`/users/profile`, {
+                if (token) {
+                    const response = await axios.get('/users/profile', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -50,10 +49,9 @@ const Profile: React.FC = () => {
 
     const handleSave = async () => {
         try {
-            const userId = localStorage.getItem('userId');
             const token = localStorage.getItem('authToken');
-            if (userId && token) {
-                await axios.put(`/users/update`, { ...profile, password }, {
+            if (token) {
+                await axios.put('/users/update', { ...profile, password }, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

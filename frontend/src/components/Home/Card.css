@@ -1,44 +1,31 @@
 .card {
-    background: #fff;
-    border-radius: 10px;
+    border: 1px solid #ccc;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    flex: 1;
-    margin: 0 10px;
+    margin: 10px;
+    border-radius: 5px;
     text-align: center;
 }
 
-.card h3 {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #333;
+.card.green {
+    border-color: green;
+}
+
+.card.red {
+    border-color: red;
 }
 
 .card-info {
     display: flex;
-    justify-content: center;
-    align-items: baseline;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.card-count {
-    font-size: 24px;
+.card-value {
+    font-size: 1.5em;
     font-weight: bold;
-    margin-right: 10px;
 }
 
-.card-percentage {
-    font-size: 16px;
-    color: #777;
-}
-
-.card.yellow {
-    border-top: 5px solid #ffeb3b;
-}
-
-.card.red {
-    border-top: 5px solid #f44336;
-}
-
-.card.orange {
-    border-top: 5px solid #ff9800;
+.card-change {
+    font-size: 1em;
+    color: inherit;
 }

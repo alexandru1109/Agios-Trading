@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from '../../config/axiosConfig'; // Ensure correct path
 import './Dashboard.css';
 import Card from './Card';
 import Chart from './Chart';
 
+interface Stock {
+    '01. symbol': string;
+    '05. price': string;
+    '09. change': string;
+    '10. change percent': string;
+}
+
 const Dashboard: React.FC = () => {
-    const cardsData = [
-        { id: 1, title: 'Invoice Sent', value: '120', change: '+50%', color: 'yellow' as const },
-        { id: 2, title: 'Invoice Received', value: '56', change: '-13%', color: 'red' as const },
-        { id: 3, title: 'Invoice Paid', value: '16', change: '-23%', color: 'orange' as const },
-    ];
+    const [stocks, setStocks] = useState<Stock[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchMarketSummary = async () => {
+            try {
+                const response = await axios.get('/market/market-summary');
+                setStocks(response.data.stocks);
+                setIsLoading(false);
+            } catch (error) {
+                setError('Error fetching market summary');
+                setIsLoading(false);
+            }
+        };
+
+        fetchMarketSummary();
+    }, []);
 
     return (
         <div className="dashboard">
@@ -21,9 +42,21 @@ const Dashboard: React.FC = () => {
                 </div>
             </div>
             <div className="cards">
-                {cardsData.map((card) => (
-                    <Card key={card.id} title={card.title} value={card.value} change={card.change} color={card.color} />
-                ))}
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p>{error}</p>
+                ) : (
+                    stocks.map((stock, index) => (
+                        <Card
+                            key={index}
+                            title={stock['01. symbol']}
+                            value={`$${stock['05. price']}`}
+                            change={`${stock['09. change']} (${stock['10. change percent']})`}
+                            color={parseFloat(stock['09. change']) > 0 ? 'green' : 'red'}
+                        />
+                    ))
+                )}
             </div>
             <div className="chart-container">
                 <Chart />
