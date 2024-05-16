@@ -11,10 +11,9 @@ const ForgotPassword: React.FC = () => {
         event.preventDefault();
         try {
             await axios.post('/auth/forgot-password', { email });
-            alert('Password reset link sent to your email');
             navigate('/login');
         } catch (error) {
-            console.error('There was an error sending the reset link!', error);
+            console.error('There was an error processing your request!', error);
         }
     };
 
@@ -30,16 +29,16 @@ const ForgotPassword: React.FC = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                    <button type="submit">Send Reset Link</button>
+                    <button type="submit">Submit</button>
                 </form>
                 <p>
                     Remembered your password? <a href="/login">Login here</a>
                 </p>
-            </div>
-            <div className="contact-support">
-                <p>For support, contact us:</p>
-                <p>Email: support@example.com</p>
-                <p>Phone: +1 234 567 890</p>
+                <div className="contact-support">
+                    <p>For support, contact us:</p>
+                    <p>Email: support@example.com</p>
+                    <p>Phone: +1 234 567 890</p>
+                </div>
             </div>
         </div>
     );

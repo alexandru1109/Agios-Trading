@@ -15,11 +15,12 @@ const Register: React.FC = () => {
         event.preventDefault();
         try {
             await axios.post('/auth/register', {
-                password,
+                name: `${firstName} ${lastName}`, // Combine first and last name
                 email,
-                firstName,
-                lastName,
+                password,
                 phone,
+                role: 'user', // Default role, adjust as needed
+                strategy: 'strategy1', // Default strategy, adjust as needed
             });
             navigate('/login');
         } catch (error) {
@@ -72,11 +73,11 @@ const Register: React.FC = () => {
                 <p>
                     Already have an account? <a href="/login">Login here</a>
                 </p>
-                <div className="contact-support">
-                    <p>For support, contact us:</p>
-                    <p>Email: support@example.com</p>
-                    <p>Phone: +1 234 567 890</p>
-                </div>
+            </div>
+            <div className="contact-support">
+                <p>For support, contact us:</p>
+                <p>Email: support@example.com</p>
+                <p>Phone: +1 234 567 890</p>
             </div>
         </div>
     );
