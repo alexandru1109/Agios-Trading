@@ -2,17 +2,16 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    root: '.', // Directorul rădăcină al proiectului
-    publicDir: 'public', // Specifică directorul public
+    root: 'src', // Specifică directorul rădăcină al proiectului
     plugins: [react()],
     build: {
-        outDir: 'build',
+        outDir: '../build', // Specifică directorul de ieșire pentru fișierele build-uite
         rollupOptions: {
-            input: './public/index.html', // Specifică calea absolută către fișierul index.html
+            input: 'src/index.html', // Specifică calea relativă către fișierul index.html
         },
     },
     server: {
-        host: '192.168.0.180', // Specifică IP-ul pe care serverul va asculta
+        host: '0.0.0.0', // Ascultă pe toate interfețele de rețea
         port: 5173, // Specifică portul pe care serverul va rula
     },
 });

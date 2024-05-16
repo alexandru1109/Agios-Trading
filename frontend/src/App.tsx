@@ -13,7 +13,9 @@ const App: React.FC = () => {
             <Router>
                 <Routes>
                     <Route path="/login" element={<Login />} />
-                    <PrivateRoute path="/home" component={Home} />
+                    <Route path="/home" element={<PrivateRoute />}>
+                        <Route path="" element={<Home />} />
+                    </Route>
                     <Route path="/" element={<Navigate to="/login" />} />
                 </Routes>
             </Router>
