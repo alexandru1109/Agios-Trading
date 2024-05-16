@@ -4,7 +4,7 @@ import authMiddleware from '../auth/authMiddleware';
 
 const router = Router();
 
-router.post('/', authMiddleware, addTransaction);
-router.get('/', authMiddleware, getTransactionHistory);
+router.post('/add', authMiddleware, addTransaction);
+router.get('/get', authMiddleware, getTransactionHistory);
 
 export default router;

@@ -29,7 +29,8 @@ const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     passHash: { type: String, required: true },
     role: { type: String, required: true },
-    strategy: { type: String, required: true }
+    strategy: { type: String, required: true },
+    balance: { type: String, required: false }
 });
 const User = mongoose_1.default.model('User', userSchema);
 exports.default = User;

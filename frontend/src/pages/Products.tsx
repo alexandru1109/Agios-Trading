@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig';
-import { Link } from 'react-router-dom';
 import './Products.css';
 
 interface Stock {
@@ -36,12 +35,44 @@ const StockList10: React.FC = () => {
     fetchStocks();
   }, []);
 
-  const handleBuy = (symbol: string) => {
-    alert(`Buy functionality for ${symbol} is not implemented yet`);
+  const handleBuy = async (symbol: string, price: number) => {
+    const quantity = 1; 
+    const transaction = {
+      type: 'buy',
+      quantity,
+      price,
+      date: new Date(),
+      symbol,
+      strategy: 'default', 
+    };
+
+    try {
+      const response = await axios.post('/transactions/add', transaction);
+      alert(`Bought ${quantity} unit(s) of ${symbol} at $${price}`);
+    } catch (error) {
+      console.error('Error buying stock:', error);
+      alert('Error buying stock');
+    }
   };
 
-  const handleSell = (symbol: string) => {
-    alert(`Sell functionality for ${symbol} is not implemented yet`);
+  const handleSell = async (symbol: string, price: number) => {
+    const quantity = 1; 
+    const transaction = {
+      type: 'sell',
+      quantity,
+      price,
+      date: new Date(),
+      symbol,
+      strategy: 'default', 
+    };
+
+    try {
+      const response = await axios.post('/transactions/add', transaction);
+      alert(`Sold ${quantity} unit(s) of ${symbol} at $${price}`);
+    } catch (error) {
+      console.error('Error selling stock:', error);
+      alert('Error selling stock');
+    }
   };
 
   return (
@@ -62,8 +93,8 @@ const StockList10: React.FC = () => {
               <p>Open Price: ${stock.openPrice}</p>
               <p>Previous Close Price: ${stock.previousClosePrice}</p>
               <div className="stock-buttons">
-                <button onClick={() => handleBuy(stock.symbol)}>Buy</button>
-                <button onClick={() => handleSell(stock.symbol)}>Sell</button>
+                <button onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
+                <button onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
               </div>
             </div>
           ))}

@@ -2,41 +2,45 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 250px;
+    width: 35vh;
     background-color: #1a1a2e;
     color: #fff;
     padding: 20px;
+    box-sizing: border-box; 
 }
 
 .profile-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
     margin-bottom: 30px;
     text-decoration: none;
     color: inherit;
-}
-
-.profile-card:hover {
-    background-color: #2ec4b6;
-    color: #1a1a2e;
-    cursor: pointer;
-    border-radius: 10px;
-    padding: 10px;
+    width: 100%;
+    box-sizing: border-box; 
 }
 
 .profile-info {
     text-align: center;
+    width: 100%;
 }
 
 .profile-name {
     font-size: 20px;
     font-weight: bold;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-title {
     font-size: 14px;
     color: #a9a9a9;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-arrow {

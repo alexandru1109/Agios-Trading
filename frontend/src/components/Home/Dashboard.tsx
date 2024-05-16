@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../config/axiosConfig'; // Ensure correct path
+import axios from '../../config/axiosConfig'; 
 import './Dashboard.css';
 import Card from './Card';
 import Chart from './Chart';
@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
     return (
         <div className="dashboard">
             <div className="dashboard-header">
-                <h2>Today, 12 Feb 2024</h2>
+                <h2>Today, 17 May 2024</h2>
                 <div className="header-icons">
                     <i className="icon-search"></i>
                     <i className="icon-bell"></i>

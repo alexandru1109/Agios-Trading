@@ -1,24 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from '../../config/axiosConfig';
 import './Navbar.css';
-import { FaTachometerAlt, FaBuilding, FaUsers, FaBox, FaDollarSign, FaCog, FaChevronDown } from 'react-icons/fa';
+import { FaTachometerAlt, FaBuilding, FaBox, FaChevronDown } from 'react-icons/fa';
 
-const Navbar = () => {
+interface UserProfile {
+    name: string;
+    role: string;
+}
+
+const Navbar: React.FC = () => {
+    const [profile, setProfile] = useState<UserProfile>({ name: '', role: '' });
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    const response = await axios.get('/users/profile', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setProfile(response.data);
+                }
+            } catch (error) {
+                console.error('Error fetching profile data', error);
+            }
+        };
+
+        fetchProfile();
+    }, []);
+
     return (
         <nav className="navbar">
             <div className="profile-card">
                 <Link to="/profile">
                     <div className="profile-info">
-                        <div className="profile-name">Hana</div>
-                        <div className="profile-title">CEO</div>
+                        <div className="profile-name">{profile.name}</div>
+                        <div className="profile-title">{profile.role}</div>
                         <FaChevronDown className="profile-arrow" />
                     </div>
                 </Link>
             </div>
             <div className="admins-menu">
-                <div className="admins-menu-title">
-                    <span>Admins menu</span>
-                </div>
                 <ul className="navbar-links">
                     <li className="active">
                         <Link to="/home">
@@ -33,23 +58,6 @@ const Navbar = () => {
                     <li>
                         <Link to="/stocks">
                             <FaBox className="icon" /> Products
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="#">
-                            <FaDollarSign className="icon" /> Balance
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-            <div className="settings-menu">
-                <div className="settings-menu-title">
-                    <span>Others</span>
-                </div>
-                <ul className="navbar-links">
-                    <li>
-                        <Link to="#">
-                            <FaCog className="icon" /> Settings
                         </Link>
                     </li>
                 </ul>

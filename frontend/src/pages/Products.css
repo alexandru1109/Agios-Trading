@@ -1,69 +1,69 @@
 .stock-list-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #1a1a2e; /* dark background */
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
     margin: 0 auto;
-  }
-  
-  h1 {
+    color: #fff; /* white text */
+}
+
+h1 {
     text-align: center;
-    color: #333;
+    color: #fff; /* white text */
     margin-bottom: 20px;
-  }
-  
-  .stock-list {
+}
+
+.stock-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-  }
-  
-  .stock-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
+}
+
+.stock-item {
+    background-color: #2a2a40; /* slightly lighter dark background */
+    border: 1px solid #3a3a5e; /* darker border */
     border-radius: 8px;
     padding: 15px;
     margin: 10px;
     width: calc(33.333% - 40px);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-  }
-  
-  .stock-item:hover {
+}
+
+.stock-item:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  .stock-item h2 {
-    color: #0073e6;
+}
+
+.stock-item h2 {
+    color: #2ec4b6; /* teal color for headers */
     margin-bottom: 10px;
-  }
-  
-  .stock-item p {
+}
+
+.stock-item p {
     margin: 5px 0;
-    color: #555;
-  }
-  
-  .stock-buttons {
+    color: #a9a9a9; /* light grey text for descriptions */
+}
+
+.stock-buttons {
     margin-top: 10px;
-  }
-  
-  .stock-buttons button {
-    background-color: #0073e6;
-    color: #fff;
+}
+
+.stock-buttons button {
+    background-color: #2ec4b6; /* teal button */
+    color: #1a1a2e; /* dark text on button */
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .stock-buttons button:hover {
-    background-color: #005bb5;
-  }
-  
-  .stock-buttons button + button {
+}
+
+.stock-buttons button:hover {
+    background-color: #2aa5a0; /* darker teal on hover */
+}
+
+.stock-buttons button + button {
     margin-left: 10px;
-  }
-  
+}
