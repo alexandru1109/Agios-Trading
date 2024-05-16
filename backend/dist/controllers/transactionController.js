@@ -10,21 +10,25 @@ const addTransaction = async (req, res) => {
         return res.status(401).json({ message: 'User not authenticated' });
     }
     const userId = req.user.id;
-    const { stockSymbol, transactionType, amount } = req.body;
+    const { type, quantity, price, date, symbol, strategy } = req.body;
     try {
         const transaction = new transactionModel_1.default({
             userId,
-            stockSymbol,
-            transactionType,
-            amount
+            type,
+            quantity,
+            price,
+            date,
+            symbol,
+            strategy,
         });
         await transaction.save();
         res.status(201).json({
             message: 'Transaction added successfully',
-            transaction
+            transaction,
         });
     }
     catch (error) {
+        console.error('Error adding transaction:', error);
         res.status(500).json({ message: 'Error adding transaction', error });
     }
 };
@@ -39,6 +43,7 @@ const getTransactionHistory = async (req, res) => {
         res.status(200).json(transactions);
     }
     catch (error) {
+        console.error('Error fetching transaction history:', error);
         res.status(500).json({ message: 'Error fetching transaction history', error });
     }
 };

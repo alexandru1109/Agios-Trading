@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes';
 import authMiddleware from './auth/authMiddleware';
 import errorMiddleware from './middlewares/errorMiddleware';
 import chatbotRoutes from './routes/chatbotRoutes';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ connectDB();
 const app = express();
 
 app.use(morgan('dev')); 
-
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);

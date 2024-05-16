@@ -1,0 +1,24 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gross-volume {
+    margin-top: 20px;
+}
+
+.today-report {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}

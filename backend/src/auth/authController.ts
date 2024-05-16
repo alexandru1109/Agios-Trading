@@ -4,6 +4,7 @@ import AuthService from '../auth/authService';
 export const register = async (req: Request, res: Response) => {
   try {
     const { name, email, password, role, strategy } = req.body;
+    console.log('Request body:', req.body);
     const user = await AuthService.register(name, email, password, role, strategy);
     res.send({ user, message: 'User registered successfully' });
   } catch (error: unknown) {

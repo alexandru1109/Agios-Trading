@@ -1,0 +1,40 @@
+.card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    margin: 10px;
+    text-align: center;
+}
+
+.card.yellow {
+    background-color: #ffcc00;
+}
+
+.card.red {
+    background-color: #ff4d4d;
+}
+
+.card.light-red {
+    background-color: #ff9999;
+}
+
+.card.orange {
+    background-color: #ff9933;
+}
+
+.card.blue {
+    background-color: #3399ff;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.card-content p {
+    font-size: 24px;
+    font-weight: bold;
+}

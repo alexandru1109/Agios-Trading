@@ -8,23 +8,27 @@ export const addTransaction = async (req: Request, res: Response) => {
   }
 
   const userId = (req.user as jwt.JwtPayload & { id: string }).id;
-  const { stockSymbol, transactionType, amount } = req.body;
+  const { type, quantity, price, date, symbol, strategy } = req.body;
 
   try {
     const transaction = new Transaction({
       userId,
-      stockSymbol,
-      transactionType,
-      amount
+      type,
+      quantity,
+      price,
+      date,
+      symbol,
+      strategy,
     });
 
     await transaction.save();
 
     res.status(201).json({
       message: 'Transaction added successfully',
-      transaction
+      transaction,
     });
   } catch (error) {
+    console.error('Error adding transaction:', error);
     res.status(500).json({ message: 'Error adding transaction', error });
   }
 };
@@ -41,6 +45,7 @@ export const getTransactionHistory = async (req: Request, res: Response) => {
 
     res.status(200).json(transactions);
   } catch (error) {
+    console.error('Error fetching transaction history:', error);
     res.status(500).json({ message: 'Error fetching transaction history', error });
   }
 };

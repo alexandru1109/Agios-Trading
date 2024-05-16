@@ -1,25 +1,22 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import PrivateRoute from './components/Main/PrivateRoute';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import ForgotPassword from './components/Auth/ForgotPassword';
 import Home from './pages/Home';
 import './App.css';
-import './index.css';
 
 const App: React.FC = () => {
     return (
-        <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/home" element={<PrivateRoute />}>
-                        <Route path="" element={<Home />} />
-                    </Route>
-                    <Route path="/" element={<Navigate to="/login" />} />
-                </Routes>
-            </Router>
-        </AuthProvider>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Login />} />
+            </Routes>
+        </Router>
     );
 };
 

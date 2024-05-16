@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +6,7 @@
     background: #2ec4b6;
 }
 
-.login-card {
+.register-card {
     background: #1a1a2e;
     padding: 40px;
     border-radius: 10px;
@@ -15,17 +15,17 @@
     width: 300px;
 }
 
-.login-card h2 {
+.register-card h2 {
     margin-bottom: 20px;
     color: #fff;
 }
 
-.login-card form {
+.register-card form {
     display: flex;
     flex-direction: column;
 }
 
-.login-card input {
+.register-card input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -35,11 +35,11 @@
     color: #fff;
 }
 
-.login-card input::placeholder {
+.register-card input::placeholder {
     color: #a9a9a9;
 }
 
-.login-card button {
+.register-card button {
     width: 100%;
     padding: 10px;
     background: #2ec4b6;
@@ -50,27 +50,30 @@
     transition: background 0.3s;
 }
 
-.login-card button:hover {
+.register-card button:hover {
     background: #1ec1a6;
 }
 
-.login-card p {
+.register-card p {
     color: #fff;
     margin-top: 20px;
 }
 
-.login-card p a {
+.register-card p a {
     color: #2ec4b6;
     text-decoration: none;
 }
 
-.login-card p a:hover {
+.register-card p a:hover {
     text-decoration: underline;
 }
 
-.login-card .forgot-password {
-    color: #a9a9a9;
-    margin-bottom: 20px;
-    display: block;
-    text-align: left;
+.contact-support {
+    margin-top: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.contact-support p {
+    margin: 5px 0;
 }

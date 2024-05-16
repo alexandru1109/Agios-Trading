@@ -1,8 +1,8 @@
-// src/pages/Home.tsx
 import React from 'react';
+import Dashboard from '../components/Home/Dashboard';
 
 const Home: React.FC = () => {
-    return <div>Welcome to the Home Page</div>;
+    return <Dashboard />;
 };
 
 export default Home;

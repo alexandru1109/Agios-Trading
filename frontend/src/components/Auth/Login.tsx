@@ -1,60 +1,51 @@
-// src/components/Auth/Login.tsx
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext';
+import axios from '../../config/axiosConfig';
 import './Login.css';
 
 const Login: React.FC = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const authContext = useContext(AuthContext);
-
-    if (!authContext) {
-        return null; // Sau puteți afișa un mesaj de eroare
-    }
-
-    const { login } = authContext;
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
-        await login(username, password);
-        navigate('/home');
+        try {
+            await axios.post('/auth/login', { email, password });
+            navigate('/home');
+        } catch (error) {
+            console.error('There was an error logging in!', error);
+        }
     };
 
     return (
         <div className="login-container">
-            <h1>Welcome to the website</h1>
-            <form onSubmit={handleLogin} className="login-form">
-                <label>
-                    User Name
+            <div className="login-card">
+                <h2>Login</h2>
+                <form onSubmit={handleLogin}>
                     <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        type="email"
+                        placeholder="Email Address"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                </label>
-                <label>
-                    Password
                     <input
                         type="password"
+                        placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                </label>
-                <div className="login-options">
-                    <label>
-                        <input type="checkbox" /> Remember me
-                    </label>
-                    <a href="/forgot-password">Forgot Password?</a>
-                </div>
-                <button type="submit">Login</button>
+                    <button type="submit">Login</button>
+                </form>
                 <p>
-                    To create a new account, <a href="/register">Click here</a>
+                    <a href="/forgot-password">Forgot Password?</a>
                 </p>
-            </form>
+                <p>
+                    Not a member? <a href="/register">Sign up now</a>
+                </p>
+            </div>
         </div>
     );
 };

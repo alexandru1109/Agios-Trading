@@ -8,6 +8,7 @@ const authService_1 = __importDefault(require("../auth/authService"));
 const register = async (req, res) => {
     try {
         const { name, email, password, role, strategy } = req.body;
+        console.log('Request body:', req.body);
         const user = await authService_1.default.register(name, email, password, role, strategy);
         res.send({ user, message: 'User registered successfully' });
     }
