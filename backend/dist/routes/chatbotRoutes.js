@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
+const express_1 = __importDefault(require("express"));
 const chatbotController_1 = require("../controllers/chatbotController");
-const router = (0, express_1.Router)();
-router.post('/chat', chatbotController_1.chatWithBot);
+const router = express_1.default.Router();
+router.post('/message', chatbotController_1.chatWithBot);
 exports.default = router;

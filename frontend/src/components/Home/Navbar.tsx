@@ -1,18 +1,19 @@
 import React from 'react';
-import profileImage from '../../../public/profile.png';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { FaTachometerAlt, FaBuilding, FaUsers, FaBox, FaDollarSign, FaCog, FaChevronDown } from 'react-icons/fa';
 
-const Navbar: React.FC = () => {
+const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="profile-card">
-                <img className="profile-image" src={profileImage} alt="Profile" />
-                <div className="profile-info">
-                    <div className="profile-name">Hana</div>
-                    <div className="profile-title">CEO</div>
-                    <FaChevronDown className="profile-arrow" />
-                </div>
+                <Link to="/profile">
+                    <div className="profile-info">
+                        <div className="profile-name">Hana</div>
+                        <div className="profile-title">CEO</div>
+                        <FaChevronDown className="profile-arrow" />
+                    </div>
+                </Link>
             </div>
             <div className="admins-menu">
                 <div className="admins-menu-title">
@@ -20,34 +21,41 @@ const Navbar: React.FC = () => {
                 </div>
                 <ul className="navbar-links">
                     <li className="active">
-                        <a href="#">
+                        <Link to="/home">
                             <FaTachometerAlt className="icon" /> Dashboard
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to="#">
                             <FaBuilding className="icon" /> Business Info
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to="#">
                             <FaUsers className="icon" /> Clients
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to="#">
                             <FaBox className="icon" /> Products
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#">
+                        <Link to="#">
                             <FaDollarSign className="icon" /> Balance
-                        </a>
+                        </Link>
                     </li>
+                </ul>
+            </div>
+            <div className="settings-menu">
+                <div className="settings-menu-title">
+                    <span>Others</span>
+                </div>
+                <ul className="navbar-links">
                     <li>
-                        <a href="#">
+                        <Link to="#">
                             <FaCog className="icon" /> Settings
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

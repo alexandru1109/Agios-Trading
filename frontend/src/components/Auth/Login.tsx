@@ -11,7 +11,10 @@ const Login: React.FC = () => {
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
         try {
-            await axios.post('/auth/login', { email, password });
+            const response = await axios.post('/auth/login', { email, password });
+            const { token, userId } = response.data;
+            localStorage.setItem('authToken', token);
+            localStorage.setItem('userId', userId);
             navigate('/home');
         } catch (error) {
             console.error('There was an error logging in!', error);
