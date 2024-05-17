@@ -2,12 +2,12 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 35vh;
-    /* Adjust the width as needed */
-    background-color: #1a1a2e;
-    color: #fff;
+    width: 250px;
+    background-color: #fff;
+    color: #343a40;
     padding: 20px;
     box-sizing: border-box;
+    border-right: 1px solid #e0e0e0;
 }
 
 .profile-card {
@@ -19,52 +19,48 @@
     color: inherit;
     width: 100%;
     padding: 20px;
-    background-color: #2a2a3e;
+    background-color: #f8f9fa;
     border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
     box-sizing: border-box;
 }
 
-.profile-card .profile-info {
+.profile-card img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-info {
     text-align: center;
-    width: 100%;
 }
 
-.profile-card .profile-name {
-    font-size: 20px;
+.profile-name {
+    font-size: 18px;
     font-weight: bold;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #343a40;
+    margin-bottom: 5px;
 }
 
-.profile-card .profile-title {
+.profile-title {
     font-size: 14px;
-    color: #a9a9a9;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: #6c757d;
+    margin-bottom: 5px;
 }
 
-.profile-card .profile-balance {
+.admins-menu-title {
     font-size: 14px;
-    color: #a9a9a9;
-    margin-top: 10px;
-}
-
-.profile-card .profile-arrow {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.admins-menu {
-    flex-grow: 1;
+    color: #6c757d;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .navbar-links {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 .navbar-links li {
@@ -74,23 +70,21 @@
 .navbar-links a {
     display: flex;
     align-items: center;
-    color: #fff;
+    color: #343a40;
     text-decoration: none;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.navbar-links a:hover {
-    background-color: #2ec4b6;
-    color: #1a1a2e;
+.navbar-links a:hover,
+.navbar-links .active {
+    background-color: #fd7e14;
+    color: #fff;
 }
 
 .navbar-links a .icon {
     margin-right: 10px;
-}
-
-.active a {
-    background-color: #2ec4b6;
-    color: #1a1a2e;
+    font-size: 18px;
+    /* Adjusted icon size */
 }

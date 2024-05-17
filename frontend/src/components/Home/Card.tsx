@@ -1,4 +1,3 @@
-// Card.tsx
 import React from 'react';
 import './Card.css';
 
@@ -13,8 +12,8 @@ const Card: React.FC<CardProps> = ({ title, value, change, color }) => {
     return (
         <div className="card">
             <h3>{title}</h3>
-            <p className="value">{value}</p>
-            <p className="change" style={{ color }}>{change}</p>
+            <p>{value}</p>
+            <p style={{ color }}>{change}</p>
         </div>
     );
 };

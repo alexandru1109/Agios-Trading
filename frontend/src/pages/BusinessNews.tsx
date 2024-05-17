@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig'; // Ensure correct path
 import './BusinessNews.css';
-import Navbar from '../components/Home/Navbar'; // Corrected import path
+import Navbar from '../components/Home/Navbar'; // Adjust the path to match your project structure
 
 interface NewsArticle {
     title: string;

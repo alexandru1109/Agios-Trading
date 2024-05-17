@@ -3,6 +3,7 @@ import Balance from '../models/balanceModel';
 
 export const getBalance = async (req: Request, res: Response) => {
   const userId = req.user?.id;
+  console.log('User ID:', userId); // Add this log
   if (!userId) {
     return res.status(401).json({ message: 'User not authenticated' });
   }
@@ -22,6 +23,7 @@ export const getBalance = async (req: Request, res: Response) => {
 
 export const updateBalance = async (req: Request, res: Response) => {
   const userId = req.user?.id;
+  console.log('User ID:', userId); // Add this log
   if (!userId) {
     return res.status(401).json({ message: 'User not authenticated' });
   }

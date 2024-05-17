@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { FaTachometerAlt, FaBuilding, FaBox, FaChevronDown } from 'react-icons/fa';
-import axios from '../..//config/axiosConfig';
+import axios from '../../config/axiosConfig';
 
 interface UserProfile {
     name: string;
@@ -46,7 +46,6 @@ const Navbar: React.FC = () => {
             }
         };
 
-
         fetchProfile();
         fetchBalance();
     }, []);
@@ -64,6 +63,7 @@ const Navbar: React.FC = () => {
                 </Link>
             </div>
             <div className="admins-menu">
+                <div className="admins-menu-title">Admin's menu</div>
                 <ul className="navbar-links">
                     <li className="active">
                         <Link to="/home">

@@ -1,31 +1,9 @@
 .card {
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid #ddd;
     padding: 20px;
-    margin: 10px;
     border-radius: 5px;
-    text-align: center;
-}
-
-.card.green {
-    border-color: green;
-}
-
-.card.red {
-    border-color: red;
-}
-
-.card-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-value {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.card-change {
-    font-size: 1em;
-    color: inherit;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 200px;
 }

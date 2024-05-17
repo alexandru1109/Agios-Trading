@@ -8,6 +8,7 @@ const balanceModel_1 = __importDefault(require("../models/balanceModel"));
 const getBalance = async (req, res) => {
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    console.log('User ID:', userId); // Add this log
     if (!userId) {
         return res.status(401).json({ message: 'User not authenticated' });
     }
@@ -27,6 +28,7 @@ exports.getBalance = getBalance;
 const updateBalance = async (req, res) => {
     var _a;
     const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+    console.log('User ID:', userId); // Add this log
     if (!userId) {
         return res.status(401).json({ message: 'User not authenticated' });
     }
