@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from '../../config/axiosConfig';
 import './Navbar.css';
 import { FaTachometerAlt, FaBuilding, FaBox, FaChevronDown } from 'react-icons/fa';
+import axios from '../..//config/axiosConfig';
 
 interface UserProfile {
     name: string;
@@ -11,6 +11,7 @@ interface UserProfile {
 
 const Navbar: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile>({ name: '', role: '' });
+    const [balance, setBalance] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -29,7 +30,25 @@ const Navbar: React.FC = () => {
             }
         };
 
+        const fetchBalance = async () => {
+            try {
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    const response = await axios.get('/balance/get', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setBalance(response.data.balance);
+                }
+            } catch (error) {
+                console.error('Error fetching balance', error);
+            }
+        };
+
+
         fetchProfile();
+        fetchBalance();
     }, []);
 
     return (
@@ -39,6 +58,7 @@ const Navbar: React.FC = () => {
                     <div className="profile-info">
                         <div className="profile-name">{profile.name}</div>
                         <div className="profile-title">{profile.role}</div>
+                        <div className="profile-balance">Balance: ${balance?.toFixed(2)}</div>
                         <FaChevronDown className="profile-arrow" />
                     </div>
                 </Link>

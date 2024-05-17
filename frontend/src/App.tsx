@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import './App.css';
 import BusinessNews from './pages/BusinessNews';
 import StockList10 from './pages/Products';
+import Balance from './pages/Balance';
 
 const App: React.FC = () => {
     return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<Login />} />
                 <Route path="/news" element={<BusinessNews />} />
                 <Route path="/stocks" element={<StockList10 />} />
+                <Route path="/balance" element={Balance} />
             </Routes>
         </Router>
     );

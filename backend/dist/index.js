@@ -18,6 +18,7 @@ const cors_1 = __importDefault(require("cors"));
 const marketRoutes_1 = __importDefault(require("./routes/marketRoutes"));
 const portfolioRoutes_1 = __importDefault(require("./routes/portfolioRoutes"));
 const widgetRoutes_1 = __importDefault(require("./routes/widgetRoutes"));
+const balanceRoutes_1 = __importDefault(require("./routes/balanceRoutes"));
 dotenv_1.default.config();
 (0, dbConnection_1.default)();
 const app = (0, express_1.default)();
@@ -32,6 +33,7 @@ app.use('/api/chatbot', chatbotRoutes_1.default);
 app.use('/api/portfolio', portfolioRoutes_1.default);
 app.use('/api/market', marketRoutes_1.default);
 app.use('/api/widgets', widgetRoutes_1.default);
+app.use('/api/balance', balanceRoutes_1.default);
 app.get('/api/protected', authMiddleware_1.default, (req, res) => {
     res.send('This is a protected route');
 });

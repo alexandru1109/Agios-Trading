@@ -1,4 +1,7 @@
+import { number } from 'joi';
+import { IntegerType } from 'mongodb';
 import mongoose, { Schema, Document } from 'mongoose';
+import internal from 'stream';
 
 export interface IUser extends Document {
   name: string;
@@ -14,7 +17,6 @@ const userSchema: Schema = new Schema({
   passHash: { type: String, required: true },
   role: { type: String, required: true },
   strategy: { type: String, required: true },
-  balance: { type: String, required: false }
 });
 
 const User = mongoose.model<IUser>('User', userSchema);

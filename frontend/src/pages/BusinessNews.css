@@ -1,59 +1,34 @@
-.news-container {
-    max-width: 800px;
-    margin: 0 auto;
+.business-news-container {
+    display: flex;
+}
+
+.news-content {
+    flex-grow: 1;
     padding: 20px;
-    background-color: #1a1a2e; /* dark background */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #fff; /* white text */
+    margin-left: 220px;
+    /* Adjust this value if necessary to match the width of your Navbar */
 }
 
-.news-container h2 {
-    font-size: 2em;
-    color: #fff; /* white text */
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.news-container p {
-    font-size: 1.1em;
-    color: #a9a9a9; /* light grey text */
-    text-align: center;
+.news-scroll-container {
+    max-height: 80vh;
+    /* Adjust this value as necessary */
+    overflow-y: auto;
+    padding-right: 10px;
+    /* Space for scrollbar */
 }
 
 .news-article {
-    background-color: #2a2a40; /* slightly lighter dark background */
-    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
 
 .news-article h4 {
-    font-size: 1.5em;
-    color: #2ec4b6; /* teal color for headers */
-    margin-bottom: 10px;
+    margin: 0 0 10px;
 }
 
 .news-article p {
-    font-size: 1.1em;
-    color: #a9a9a9; /* light grey text */
-    margin-bottom: 10px;
-}
-
-.news-article a {
-    font-size: 1em;
-    color: #2ec4b6; /* teal color for links */
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.news-article a:hover {
-    text-decoration: underline;
-}
-
-.loading, .error {
-    font-size: 1.2em;
-    color: #a9a9a9; /* light grey text */
-    text-align: center;
+    margin: 0 0 10px;
 }
