@@ -1,90 +1,96 @@
 .navbar {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    background-color: #2c3e50;
+    color: #ecf0f1;
     width: 250px;
-    background-color: #fff;
-    color: #343a40;
-    padding: 20px;
-    box-sizing: border-box;
-    border-right: 1px solid #e0e0e0;
+    /* Lățimea navbarului */
+    height: 100vh;
+    /* Înălțimea navbarului pentru a ocupa toată înălțimea ferestrei */
+    position: fixed;
+    /* Fixează navbarul în poziția stângă a ferestrei */
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    /* Adaugă un scrollbar dacă conținutul depășește înălțimea ferestrei */
+    overflow-x: hidden;
+    /* Previne scroll-ul pe axa orizontală */
 }
 
-.profile-card {
+.navbar-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    padding: 20px;
+}
+
+.profile-link {
     text-decoration: none;
     color: inherit;
-    width: 100%;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow for depth */
-    box-sizing: border-box;
-}
-
-.profile-card img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-bottom: 10px;
+    display: flex;
+    flex-grow: 1;
 }
 
 .profile-info {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #34495e;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    width: 100%;
+    /* Ocupă întreaga lățime a navbarului */
+}
+
+.profile-info:hover {
+    background-color: #3b5998;
 }
 
 .profile-name {
-    font-size: 18px;
     font-weight: bold;
-    color: #343a40;
-    margin-bottom: 5px;
 }
 
 .profile-title {
-    font-size: 14px;
-    color: #6c757d;
-    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: #bdc3c7;
+}
+
+.profile-balance {
+    font-size: 1.1em;
+    color: #ecf0f1;
+}
+
+.admins-menu {
+    margin-top: 20px;
 }
 
 .admins-menu-title {
-    font-size: 14px;
-    color: #6c757d;
-    margin-bottom: 10px;
-    text-transform: uppercase;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-bottom: 1px solid #34495e;
 }
 
 .navbar-links {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
 .navbar-links li {
-    margin-bottom: 10px;
+    padding: 10px 20px;
+}
+
+.navbar-links li.active {
+    background-color: #e67e22;
 }
 
 .navbar-links a {
+    text-decoration: none;
+    color: #ecf0f1;
     display: flex;
     align-items: center;
-    color: #343a40;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
 }
 
-.navbar-links a:hover,
-.navbar-links .active {
-    background-color: #fd7e14;
-    color: #fff;
-}
-
-.navbar-links a .icon {
+.navbar-links .icon {
     margin-right: 10px;
-    font-size: 18px;
-    /* Adjusted icon size */
 }

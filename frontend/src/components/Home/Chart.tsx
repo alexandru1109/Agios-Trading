@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../config/axiosConfig';
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // This line is necessary to prevent issues with tree-shaking
+import 'chart.js/auto';
 
 const Chart = () => {
     const [chartData, setChartData] = useState<any>(null);
@@ -9,15 +9,13 @@ const Chart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = localStorage.getItem('authToken'); // Adjust as needed based on how you store the token
+                const token = localStorage.getItem('authToken');
                 const response = await axios.get('/portfolio/portfolio-graph', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
                 const data = response.data;
-
-                // Format the data for Chart.js
                 const formattedData = formatDataForChart(data);
                 setChartData(formattedData);
             } catch (error) {
@@ -52,22 +50,9 @@ const Chart = () => {
         <div className="chart">
             <h1>Portfolio Graph</h1>
             {chartData ? (
-                <Line
-                    data={chartData}
-                    options={{
-                        scales: {
-                            x: {
-                                type: 'category',
-                                labels: chartData.labels,
-                            },
-                            y: {
-                                beginAtZero: true,
-                            },
-                        },
-                    }}
-                />
+                <Line data={chartData} />
             ) : (
-                <p>Loading chart data...</p>
+                <p>Loading...</p>
             )}
         </div>
     );

@@ -1,20 +1,18 @@
 .business-news-container {
     display: flex;
+    margin-left: 270px;
+    /* Adăugat margin-left pentru a acomoda navbarul */
 }
 
 .news-content {
     flex-grow: 1;
     padding: 20px;
-    margin-left: 220px;
-    /* Adjust this value if necessary to match the width of your Navbar */
 }
 
 .news-scroll-container {
     max-height: 80vh;
-    /* Adjust this value as necessary */
     overflow-y: auto;
     padding-right: 10px;
-    /* Space for scrollbar */
 }
 
 .news-article {
