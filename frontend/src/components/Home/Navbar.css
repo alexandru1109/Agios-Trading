@@ -3,29 +3,33 @@
     flex-direction: column;
     height: 100vh;
     width: 35vh;
+    /* Adjust the width as needed */
     background-color: #1a1a2e;
     color: #fff;
     padding: 20px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .profile-card {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
     margin-bottom: 30px;
     text-decoration: none;
     color: inherit;
     width: 100%;
-    box-sizing: border-box; 
+    padding: 20px;
+    background-color: #2a2a3e;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
-.profile-info {
+.profile-card .profile-info {
     text-align: center;
     width: 100%;
 }
 
-.profile-name {
+.profile-card .profile-name {
     font-size: 20px;
     font-weight: bold;
     width: 100%;
@@ -34,7 +38,7 @@
     text-overflow: ellipsis;
 }
 
-.profile-title {
+.profile-card .profile-title {
     font-size: 14px;
     color: #a9a9a9;
     width: 100%;
@@ -43,19 +47,19 @@
     text-overflow: ellipsis;
 }
 
-.profile-arrow {
+.profile-card .profile-balance {
+    font-size: 14px;
+    color: #a9a9a9;
     margin-top: 10px;
 }
 
-.admins-menu,
-.settings-menu {
-    margin-top: 20px;
+.profile-card .profile-arrow {
+    margin-top: 10px;
+    font-size: 14px;
 }
 
-.admins-menu-title,
-.settings-menu-title {
-    font-size: 16px;
-    margin-bottom: 10px;
+.admins-menu {
+    flex-grow: 1;
 }
 
 .navbar-links {

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig';
 import './Products.css';
+import Navbar from '../components/Home/Navbar'; // Corrected import path
 
 interface Stock {
   symbol: string;
@@ -36,14 +37,14 @@ const StockList10: React.FC = () => {
   }, []);
 
   const handleBuy = async (symbol: string, price: number) => {
-    const quantity = 1; 
+    const quantity = 1;
     const transaction = {
       type: 'buy',
       quantity,
       price,
       date: new Date(),
       symbol,
-      strategy: 'default', 
+      strategy: 'default',
     };
 
     try {
@@ -56,14 +57,14 @@ const StockList10: React.FC = () => {
   };
 
   const handleSell = async (symbol: string, price: number) => {
-    const quantity = 1; 
+    const quantity = 1;
     const transaction = {
       type: 'sell',
       quantity,
       price,
       date: new Date(),
       symbol,
-      strategy: 'default', 
+      strategy: 'default',
     };
 
     try {
@@ -77,29 +78,32 @@ const StockList10: React.FC = () => {
 
   return (
     <div className="stock-list-container">
-      <h1>Stock Market</h1>
-      {isLoading ? (
-        <p>Loading stocks...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <div className="stock-list">
-          {stocks.map(stock => (
-            <div key={stock.symbol} className="stock-item">
-              <h2>{stock.symbol}</h2>
-              <p>Current Price: ${stock.currentPrice}</p>
-              <p>High Price: ${stock.highPrice}</p>
-              <p>Low Price: ${stock.lowPrice}</p>
-              <p>Open Price: ${stock.openPrice}</p>
-              <p>Previous Close Price: ${stock.previousClosePrice}</p>
-              <div className="stock-buttons">
-                <button onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
-                <button onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
+      <Navbar />
+      <div className="stock-list-content">
+        <h1>Stock Market</h1>
+        {isLoading ? (
+          <p>Loading stocks...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div className="stock-list">
+            {stocks.map(stock => (
+              <div key={stock.symbol} className="stock-item">
+                <h2>{stock.symbol}</h2>
+                <p>Current Price: ${stock.currentPrice}</p>
+                <p>High Price: ${stock.highPrice}</p>
+                <p>Low Price: ${stock.lowPrice}</p>
+                <p>Open Price: ${stock.openPrice}</p>
+                <p>Previous Close Price: ${stock.previousClosePrice}</p>
+                <div className="stock-buttons">
+                  <button onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
+                  <button onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
