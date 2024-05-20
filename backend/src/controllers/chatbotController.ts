@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 
-const LLAMA_API_URL = process.env.LLAMA_API_URL || '';
+const LLAMA_API_URL = process.env.LLAMA_API_URL || 'dfggdfsagfdsdfgs';
 
 interface ChatbotResponseData {
   text: string;
