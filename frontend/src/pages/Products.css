@@ -1,5 +1,7 @@
 .stock-list-container {
     display: flex;
+    margin-left: 3rem;
+    margin-right: 3rem;
 }
 
 .stock-list-content {
