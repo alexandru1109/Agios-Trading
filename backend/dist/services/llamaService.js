@@ -16,22 +16,37 @@ const getChatbotResponse = async (message) => {
     }
     console.log('Sending request to Ollama API:', LLAMA_API_URL);
     try {
-        const response = await axios_1.default.post(`${LLAMA_API_URL}/api/generate`, {
+        const response = await axios_1.default.post(`${LLAMA_API_URL}/api/chat`, {
             model: 'llama3',
-            prompt: message,
-            options: {
-                num_ctx: 4096
+            messages: [
+                {
+                    role: 'user',
+                    content: message
+                }
+            ]
+        }, {
+            responseType: 'stream'
+        });
+        let responseText = '';
+        response.data.on('data', (chunk) => {
+            const lines = chunk.toString('utf8').split('\n').filter(line => line.trim() !== '');
+            for (const line of lines) {
+                try {
+                    const parsedLine = JSON.parse(line);
+                    if (parsedLine.message && parsedLine.message.role === 'assistant') {
+                        responseText += `${parsedLine.message.content} `;
+                    }
+                }
+                catch (error) {
+                    console.error('Failed to parse line as JSON:', line);
+                }
             }
         });
-        console.log('Request payload:', {
-            model: 'llama3',
-            prompt: message,
-            options: {
-                num_ctx: 4096
-            }
+        await new Promise((resolve, reject) => {
+            response.data.on('end', () => resolve());
+            response.data.on('error', (err) => reject(err));
         });
-        console.log('Response from Ollama API:', response.data);
-        return response.data.text;
+        return responseText.trim();
     }
     catch (error) {
         if (axios_1.default.isAxiosError(error)) {
