@@ -4,6 +4,7 @@ import './Home.css';
 import Card from '../components/Home/Card';
 import Chart from '../components/Home/Chart';
 import Navbar from '../components/Home/Navbar'; // Import Navbar
+import { useNavigate } from 'react-router-dom';
 
 interface Stock {
     symbol: string;
@@ -18,6 +19,7 @@ const Home: React.FC = () => {
     const [stocks, setStocks] = useState<Stock[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchMarketSummary = async () => {
@@ -33,6 +35,10 @@ const Home: React.FC = () => {
 
         fetchMarketSummary();
     }, []);
+
+    const handleChatbotClick = () => {
+        navigate('/chatbot');
+    };
 
     return (
         <div className="home-container">
@@ -66,6 +72,9 @@ const Home: React.FC = () => {
                 <div className="chart-container">
                     <Chart />
                 </div>
+                <button className="chatbot-icon" onClick={handleChatbotClick}>
+                    💬
+                </button>
             </div>
         </div>
     );

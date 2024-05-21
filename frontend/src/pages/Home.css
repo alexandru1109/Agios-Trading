@@ -2,13 +2,16 @@
     display: flex;
     height: 100vh;
     margin-left: 270px;
-    /* Adăugat margin-left pentru a acomoda navbarul */
+    overflow: hidden; /* Eliminăm scroll-ul orizontal */
 }
 
 .home-content {
     flex-grow: 1;
     padding: 20px;
     overflow-y: auto;
+    overflow-x: hidden; /* Eliminăm scroll-ul orizontal */
+    display: flex;
+    flex-direction: column;
 }
 
 .home-header {
@@ -18,11 +21,73 @@
     margin-bottom: 20px;
 }
 
-.home-header h1 {
+.home-header h2 {
     margin: 0;
 }
 
-.home-header nav {
+.home-header .header-icons {
     display: flex;
     gap: 15px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    height: 40vh; /* Mărim înălțimea secțiunii cardurilor */
+    overflow-y: hidden; /* Scoatem scroll-ul vertical */
+    overflow-x: hidden; /* Scoatem scroll-ul orizontal */
+}
+
+.chart-container {
+    flex-grow: 1;
+    margin-bottom: 20px;
+    height: 90vh; /* Mărim înălțimea graficului */
+    overflow-y: hidden; /* Înlăturăm scroll-ul vertical */
+    overflow-x: hidden; /* Înlăturăm scroll-ul orizontal */
+}
+
+.chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-icon:hover {
+    background-color: #0056b3;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 30px); /* Ajustăm flex pentru a împărți spațiul în mod egal */
+    min-width: 50px;
+    max-width: 250px; /* Micșorăm lățimea maximă pentru carduri */
+}
+
+.chart {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aliniem conținutul la stânga */
+    margin: 20px; /* Micșorăm margin pentru a se încadra mai bine */
+    height: 100%; /* Asigurăm că graficul ocupă întreg spațiul vertical disponibil */
+    width: 100%; /* Asigurăm că graficul ocupă întreg spațiul orizontal disponibil */
+}
+
+.chart h1 {
+    font-size: 18px; /* Micșorăm dimensiunea fontului */
+    margin-bottom: 10px; /* Micșorăm margin pentru a economisi spațiu */
 }
