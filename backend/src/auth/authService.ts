@@ -49,7 +49,7 @@ class AuthService {
       to: email,
       subject: 'Account Verification',
       text: `Please verify your account by clicking the link: 
-      http://${process.env.HOST}/auth/verify/${token}`
+      http://${process.env.HOST}/api/auth/verify/${token}`
     };
 
     try {
