@@ -1,12 +1,10 @@
-import express from 'express';
-import { register, login } from '../auth/authController';
+import { Router } from 'express';
+import { register, login, verify } from '../auth/authController';
 
-const router = express.Router();
+const router = Router();
 
-// Ruta pentru înregistrarea utilizatorilor
 router.post('/register', register);
-
-// Ruta pentru autentificarea utilizatorilor
+router.get('/verify/:token', verify);
 router.post('/login', login);
 
 export default router;

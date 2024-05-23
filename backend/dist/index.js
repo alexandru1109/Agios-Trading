@@ -11,7 +11,6 @@ const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
 const stockRoutes_1 = __importDefault(require("./routes/stockRoutes"));
 const transactionRoutes_1 = __importDefault(require("./routes/transactionRoutes"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
-const authMiddleware_1 = __importDefault(require("./auth/authMiddleware"));
 const errorMiddleware_1 = __importDefault(require("./middlewares/errorMiddleware"));
 const chatbotRoutes_1 = __importDefault(require("./routes/chatbotRoutes"));
 const cors_1 = __importDefault(require("cors"));
@@ -34,8 +33,14 @@ app.use('/api/portfolio', portfolioRoutes_1.default);
 app.use('/api/market', marketRoutes_1.default);
 app.use('/api/widgets', widgetRoutes_1.default);
 app.use('/api/balance', balanceRoutes_1.default);
-app.get('/api/protected', authMiddleware_1.default, (req, res) => {
-    res.send('This is a protected route');
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+app.use((req, res, next) => {
+    console.log(`Headers: ${JSON.stringify(req.headers)}`);
+    console.log(`Body: ${JSON.stringify(req.body)}`);
+    next();
 });
 app.use(errorMiddleware_1.default);
 const PORT = process.env.PORT || 5000;

@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.verify = exports.login = exports.register = void 0;
 const authService_1 = __importDefault(require("../auth/authService"));
 const register = async (req, res) => {
     try {
         const { name, email, password, role, strategy } = req.body;
         console.log('Request body:', req.body);
         const user = await authService_1.default.register(name, email, password, role, strategy);
-        res.send({ user, message: 'User registered successfully' });
+        res.send({ user, message: 'User registered successfully. Please check your email for the verification link.' });
     }
     catch (error) {
         if (error instanceof Error) {
@@ -43,3 +43,19 @@ const login = async (req, res) => {
     }
 };
 exports.login = login;
+const verify = async (req, res) => {
+    try {
+        const { token } = req.params;
+        await authService_1.default.verifyUser(token);
+        res.send({ message: 'Email verification successful' });
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            res.status(400).send(error.message);
+        }
+        else {
+            res.status(500).send('An unexpected error occurred');
+        }
+    }
+};
+exports.verify = verify;
