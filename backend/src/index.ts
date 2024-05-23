@@ -35,17 +35,6 @@ app.use('/api/market', marketRoutes);
 app.use('/api/widgets', widgetRoutes);
 app.use('/api/balance', balanceRoutes);
 
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
-app.use((req, res, next) => {
-  console.log(`Headers: ${JSON.stringify(req.headers)}`);
-  console.log(`Body: ${JSON.stringify(req.body)}`);
-  next();
-});
-
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
