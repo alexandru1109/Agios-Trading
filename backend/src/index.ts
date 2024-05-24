@@ -35,11 +35,6 @@ app.use('/api/market', marketRoutes);
 app.use('/api/widgets', widgetRoutes);
 app.use('/api/balance', balanceRoutes);
 
-
-app.get('/api/protected', authMiddleware, (req, res) => {
-  res.send('This is a protected route');
-});
-
 app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;

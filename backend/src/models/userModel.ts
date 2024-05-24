@@ -1,7 +1,4 @@
-import { number } from 'joi';
-import { IntegerType } from 'mongodb';
 import mongoose, { Schema, Document } from 'mongoose';
-import internal from 'stream';
 
 export interface IUser extends Document {
   name: string;
@@ -9,16 +6,18 @@ export interface IUser extends Document {
   passHash: string;
   role: string;
   strategy: string;
+  isVerified: boolean;
+  verificationToken: string;
 }
 
-const userSchema: Schema = new Schema({
+const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   passHash: { type: String, required: true },
   role: { type: String, required: true },
   strategy: { type: String, required: true },
+  isVerified: { type: Boolean, default: false },
+  verificationToken: { type: String }
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
-
-export default User;
+export default mongoose.model<IUser>('User', UserSchema);
