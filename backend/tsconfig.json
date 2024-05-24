@@ -10,5 +10,5 @@
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "src/tests"]
+  "include": ["src/**/*", "src/tests", "mockPayUService.ts"]
 }

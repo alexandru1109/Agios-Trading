@@ -14,6 +14,7 @@ import marketRoutes from './routes/marketRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
 import widgetRoutes from './routes/widgetRoutes';
 import balanceRoutes from './routes/balanceRoutes';
+import paymentRoutes from './routes/paymentRoutes';
 
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/market', marketRoutes);
 app.use('/api/widgets', widgetRoutes);
 app.use('/api/balance', balanceRoutes);
+app.use('/api/payment', paymentRoutes);
 
 app.use(errorMiddleware);
 
