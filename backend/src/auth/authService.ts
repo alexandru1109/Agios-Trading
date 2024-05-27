@@ -8,6 +8,20 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class AuthService {
+  private createTransporter = async () => {
+    const transporter = nodemailer.createTransport({
+      host: process.env.EMAIL_HOST,
+      port: parseInt(process.env.EMAIL_PORT || '465'),
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    return transporter;
+  };
+
   public async register(name: string, email: string, password: string, role: string, strategy: string): Promise<IUser> {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -34,22 +48,14 @@ class AuthService {
   }
 
   private async sendVerificationEmail(email: string, token: string): Promise<void> {
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST,
-      port: parseInt(process.env.EMAIL_PORT || '465'),
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    const transporter = await this.createTransporter();
 
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
       subject: 'Account Verification',
       text: `Please verify your account by clicking the link: 
-      http://${process.env.HOST}/api/auth/verify/${token}`
+      http://${process.env.HOST}/auth/verify/${token}`
     };
 
     try {
@@ -57,6 +63,24 @@ class AuthService {
       console.log('Email sent: ' + info.response);
     } catch (error) {
       console.error('Error sending email:', error);
+    }
+  }
+
+  public async sendOtpEmail(email: string, otp: string): Promise<void> {
+    const transporter = await this.createTransporter();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Your OTP Code',
+      text: `Your OTP code is: ${otp}`
+    };
+
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log('OTP email sent: ' + info.response);
+    } catch (error) {
+      console.error('Error sending OTP email:', error);
     }
   }
 
@@ -71,7 +95,7 @@ class AuthService {
     await user.save();
   }
 
-  public async login(email: string, password: string): Promise<string> {
+  public async login(email: string, password: string): Promise<void> {
     const user = await User.findOne({ email });
     if (!user || !user.isVerified) {
       throw new Error('Invalid email or password');
@@ -81,9 +105,28 @@ class AuthService {
     if (!isMatch) {
       throw new Error('Invalid email or password');
     }
-    
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
 
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // OTP expires in 10 minutes
+
+    user.otp = otp;
+    user.otpExpiry = otpExpiry;
+    await user.save();
+
+    await this.sendOtpEmail(user.email, otp);
+  }
+
+  public async verifyOtp(email: string, otp: string): Promise<string> {
+    const user = await User.findOne({ email, otp, otpExpiry: { $gte: new Date() } });
+    if (!user) {
+      throw new Error('Invalid or expired OTP');
+    }
+
+    user.otp = '';
+    user.otpExpiry = undefined;
+    await user.save();
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'secret', { expiresIn: '1h' });
     return token;
   }
 }
