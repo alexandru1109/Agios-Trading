@@ -6,9 +6,64 @@ const NEWS_API_KEY = process.env.NEWS_API_KEY;
 const FINNHUB_API_URL = 'https://finnhub.io/api/v1';
 const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
 
-const stockSymbols = ['MSFT', 'AAPL', 'GOOGL'];
-const stockSymbols10 = ['MSFT', 'AAPL', 'GOOGL', 'AMZN', 'TSLA', 'FB', 'NFLX', 'NVDA', 'BABA', 'DIS'];
+interface StockSymbol {
+    symbol: string;
+    type: string;
+}
 
+interface StockData {
+    c: number;
+    h: number;
+    l: number;
+    o: number;
+    pc: number;
+}
+
+const topSymbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'FB', 'NFLX', 'NVDA', 'BABA', 'DIS'];
+
+const getTopStocks = async (count: number): Promise<string[]> => {
+    try {
+        return topSymbols.slice(0, count);
+    } catch (error) {
+        console.error('Error fetching stock symbols:', error);
+        throw new Error('Error fetching stock symbols');
+    }
+};
+
+const fetchStockData = async (symbols: string[]): Promise<any[]> => {
+    const stockPromises = symbols.map(symbol =>
+        axios.get<StockData>(`${FINNHUB_API_URL}/quote?symbol=${symbol}`, {
+            headers: {
+                'X-Finnhub-Token': FINNHUB_API_KEY
+            }
+        })
+    );
+
+    const stockResponses = await Promise.all(stockPromises);
+
+    return stockResponses.map((response, index) => {
+        if (response.status !== 200) {
+            console.error(`Error fetching data for symbol ${symbols[index]}: Status ${response.status}`);
+            return null;
+        }
+
+        const data = response.data;
+
+        if (!data) {
+            console.error(`Malformed response for symbol ${symbols[index]}:`, response.data);
+            return null;
+        }
+
+        return {
+            symbol: symbols[index],
+            currentPrice: data.c,
+            highPrice: data.h,
+            lowPrice: data.l,
+            openPrice: data.o,
+            previousClosePrice: data.pc
+        };
+    }).filter(stock => stock !== null);
+};
 
 export const getMarketSummary = async (req: Request, res: Response) => {
     if (!FINNHUB_API_KEY) {
@@ -16,53 +71,13 @@ export const getMarketSummary = async (req: Request, res: Response) => {
     }
 
     try {
-        const stockPromises = stockSymbols.map(symbol =>
-            axios.get(`${FINNHUB_API_URL}/quote?symbol=${symbol}`, {
-                headers: {
-                    'X-Finnhub-Token': FINNHUB_API_KEY
-                }
-            })
-        );
-
-        const stockResponses = await Promise.all(stockPromises);
-
-        const stocks = stockResponses.map((response, index) => {
-            if (response.status !== 200) {
-                console.error(`Error fetching data for symbol ${stockSymbols[index]}: Status ${response.status}`);
-                return null;
-            }
-
-            const data = response.data;
-
-            if (!data) {
-                console.error(`Malformed response for symbol ${stockSymbols[index]}:`, response.data);
-                return null;
-            }
-
-            return {
-                symbol: stockSymbols[index],
-                currentPrice: data.c,
-                highPrice: data.h,
-                lowPrice: data.l,
-                openPrice: data.o,
-                previousClosePrice: data.pc
-            };
-        }).filter(stock => stock !== null);
+        const stockSymbols = await getTopStocks(3); 
+        const stocks = await fetchStockData(stockSymbols);
 
         res.status(200).json({ stocks });
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error('Axios error:', error.message);
-            if (error.response) {
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
-                console.error('Response headers:', error.response.headers);
-            }
-            res.status(500).json({ message: 'Error fetching market summary', error: error.message });
-        } else {
-            console.error('Unexpected error:', error);
-            res.status(500).json({ message: 'Error fetching market summary', error: String(error) });
-        }
+        console.error('Error fetching market summary:', error);
+        res.status(500).json({ message: 'Error fetching market summary', error: String(error) });
     }
 };
 
@@ -72,53 +87,13 @@ export const getMarketSummary10 = async (req: Request, res: Response) => {
     }
 
     try {
-        const stockPromises = stockSymbols10.map(symbol =>
-            axios.get(`${FINNHUB_API_URL}/quote?symbol=${symbol}`, {
-                headers: {
-                    'X-Finnhub-Token': FINNHUB_API_KEY
-                }
-            })
-        );
-
-        const stockResponses = await Promise.all(stockPromises);
-
-        const stocks = stockResponses.map((response, index) => {
-            if (response.status !== 200) {
-                console.error(`Error fetching data for symbol ${stockSymbols10[index]}: Status ${response.status}`);
-                return null;
-            }
-
-            const data = response.data;
-
-            if (!data) {
-                console.error(`Malformed response for symbol ${stockSymbols10[index]}:`, response.data);
-                return null;
-            }
-
-            return {
-                symbol: stockSymbols10[index],
-                currentPrice: data.c,
-                highPrice: data.h,
-                lowPrice: data.l,
-                openPrice: data.o,
-                previousClosePrice: data.pc
-            };
-        }).filter(stock => stock !== null);
+        const stockSymbols = await getTopStocks(10); 
+        const stocks = await fetchStockData(stockSymbols);
 
         res.status(200).json({ stocks });
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error('Axios error:', error.message);
-            if (error.response) {
-                console.error('Response data:', error.response.data);
-                console.error('Response status:', error.response.status);
-                console.error('Response headers:', error.response.headers);
-            }
-            res.status(500).json({ message: 'Error fetching market summary', error: error.message });
-        } else {
-            console.error('Unexpected error:', error);
-            res.status(500).json({ message: 'Error fetching market summary', error: String(error) });
-        }
+        console.error('Error fetching market summary:', error);
+        res.status(500).json({ message: 'Error fetching market summary', error: String(error) });
     }
 };
 
