@@ -55,7 +55,7 @@ class AuthService {
       to: email,
       subject: 'Account Verification',
       text: `Please verify your account by clicking the link: 
-      http://${process.env.HOST}/auth/verify/${token}`
+      http://${process.env.REACT_APP_API_URL}/auth/verify/${token}`
     };
 
     try {

@@ -89,15 +89,33 @@ const StockList10: React.FC = () => {
           <div className="stock-list">
             {stocks.map(stock => (
               <div key={stock.symbol} className="stock-item">
-                <h2>{stock.symbol}</h2>
-                <p>Current Price: ${stock.currentPrice}</p>
-                <p>High Price: ${stock.highPrice}</p>
-                <p>Low Price: ${stock.lowPrice}</p>
-                <p>Open Price: ${stock.openPrice}</p>
-                <p>Previous Close Price: ${stock.previousClosePrice}</p>
+                <div className="stock-header">
+                  <div className="logo-placeholder"></div>
+                  <h2>{stock.symbol}</h2>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Current Price:</span>
+                  <span className="stock-value">${stock.currentPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">High Price:</span>
+                  <span className="stock-value">${stock.highPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Low Price:</span>
+                  <span className="stock-value">${stock.lowPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Open Price:</span>
+                  <span className="stock-value">${stock.openPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Previous Close Price:</span>
+                  <span className="stock-value">${stock.previousClosePrice}</span>
+                </div>
                 <div className="stock-buttons">
-                  <button onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
-                  <button onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
+                  <button className="buy-button" onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
+                  <button className="sell-button" onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
                 </div>
               </div>
             ))}

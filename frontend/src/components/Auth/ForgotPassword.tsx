@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../config/axiosConfig';
 import './ForgotPassword.css';
 
 const ForgotPassword: React.FC = () => {
     const [email, setEmail] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleForgotPassword = async (event: React.FormEvent) => {
-        event.preventDefault();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         try {
-            await axios.post('/auth/forgot-password', { email });
-            navigate('/login');
-        } catch (error) {
-            console.error('There was an error processing your request!', error);
+            const response = await fetch('/api/send-reset-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            if (response.ok) {
+                // Redirecționarea către pagina ResetPassword cu email-ul în state
+                navigate('/reset-password', { state: { email } });
+            } else {
+                const errorData = await response.json();
+                if (errorData.message) {
+                    setError(errorData.message);
+                } else {
+                    setError('Failed to send reset code. Please try again.');
+                }
+            }
+        } catch (err: any) {
+            if (err instanceof TypeError) {
+                setError('Network error. Please check your internet connection and try again.');
+            } else if (err.message) {
+                setError(err.message);
+            } else {
+                setError('An unexpected error occurred. Please try again.');
+            }
+            console.error('There was an error!', err);
         }
     };
 
@@ -21,24 +45,17 @@ const ForgotPassword: React.FC = () => {
         <div className="forgot-password-container">
             <div className="forgot-password-card">
                 <h2>Forgot Password</h2>
-                <form onSubmit={handleForgotPassword}>
-                    <input
-                        type="email"
-                        placeholder="Email Address"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+                {error && <p className="error-message">{error}</p>}
+                <form onSubmit={handleSubmit}>
+                    <input 
+                        type="email" 
+                        placeholder="Enter your email" 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)} 
+                        required 
                     />
                     <button type="submit">Submit</button>
                 </form>
-                <p>
-                    Remembered your password? <a href="/login">Login here</a>
-                </p>
-                <div className="contact-support">
-                    <p>For support, contact us:</p>
-                    <p>Email: support@example.com</p>
-                    <p>Phone: +1 234 567 890</p>
-                </div>
             </div>
         </div>
     );

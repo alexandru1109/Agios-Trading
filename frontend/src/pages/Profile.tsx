@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig';
+import Navbar from '../components/Home/Navbar'; // Importă Navbar
 import './Profile.css';
 
 interface UserProfile {
@@ -66,82 +67,85 @@ const Profile: React.FC = () => {
 
     return (
         <div className="profile-container">
-            <div className="profile-card">
-                <div className="profile-header">
-                    <img src="/path/to/profile-pic.png" alt="Profile" />
-                    <h2>{profile.name}</h2>
-                </div>
-                <div className="profile-content">
-                    <form>
-                        <div className="profile-field">
-                            <label>Name:</label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={profile.name}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <p>{profile.name}</p>
-                            )}
-                        </div>
-                        <div className="profile-field">
-                            <label>Email:</label>
-                            {isEditing ? (
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={profile.email}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <p>{profile.email}</p>
-                            )}
-                        </div>
-                        <div className="profile-field">
-                            <label>Role:</label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="role"
-                                    value={profile.role}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <p>{profile.role}</p>
-                            )}
-                        </div>
-                        <div className="profile-field">
-                            <label>Strategy:</label>
-                            {isEditing ? (
-                                <input
-                                    type="text"
-                                    name="strategy"
-                                    value={profile.strategy}
-                                    onChange={handleChange}
-                                />
-                            ) : (
-                                <p>{profile.strategy}</p>
-                            )}
-                        </div>
-                        <div className="profile-field">
-                            <label>Password:</label>
-                            {isEditing ? (
-                                <input
-                                    type="password"
-                                    name="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                />
-                            ) : (
-                                <p>********</p>
-                            )}
-                        </div>
-                    </form>
-                    <button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
-                        {isEditing ? 'Save' : 'Edit Profile'}
-                    </button>
+            <Navbar />
+            <div className="profile-content">
+                <div className="profile-card">
+                    <div className="profile-header">
+                        <img src="/path/to/profile-pic.png" alt="Profile" />
+                        <h2>{profile.name}</h2>
+                    </div>
+                    <div className="profile-content">
+                        <form>
+                            <div className="profile-field">
+                                <label>Name:</label>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        value={profile.name}
+                                        onChange={handleChange}
+                                    />
+                                ) : (
+                                    <p>{profile.name}</p>
+                                )}
+                            </div>
+                            <div className="profile-field">
+                                <label>Email:</label>
+                                {isEditing ? (
+                                    <input
+                                        type="email"
+                                        name="email"
+                                        value={profile.email}
+                                        onChange={handleChange}
+                                    />
+                                ) : (
+                                    <p>{profile.email}</p>
+                                )}
+                            </div>
+                            <div className="profile-field">
+                                <label>Role:</label>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        name="role"
+                                        value={profile.role}
+                                        onChange={handleChange}
+                                    />
+                                ) : (
+                                    <p>{profile.role}</p>
+                                )}
+                            </div>
+                            <div className="profile-field">
+                                <label>Strategy:</label>
+                                {isEditing ? (
+                                    <input
+                                        type="text"
+                                        name="strategy"
+                                        value={profile.strategy}
+                                        onChange={handleChange}
+                                    />
+                                ) : (
+                                    <p>{profile.strategy}</p>
+                                )}
+                            </div>
+                            <div className="profile-field">
+                                <label>Password:</label>
+                                {isEditing ? (
+                                    <input
+                                        type="password"
+                                        name="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                ) : (
+                                    <p>********</p>
+                                )}
+                            </div>
+                        </form>
+                        <button onClick={isEditing ? handleSave : () => setIsEditing(true)}>
+                            {isEditing ? 'Save' : 'Edit Profile'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

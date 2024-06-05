@@ -32,18 +32,18 @@ const Chart = () => {
             datasets: data.datasets.map((dataset: any) => ({
                 ...dataset,
                 fill: false,
-                borderColor: getRandomColor(),
+                borderColor: 'rgba(255,255,255,1)', // Linii albe
+                borderWidth: 2, // Linii îngroșate
+                backgroundColor: 'rgba(255,255,255,0.4)', // Fundal alb semi-transparent
+                pointBorderColor: 'rgba(255,255,255,1)', // Puncte albe
+                pointBackgroundColor: '#fff',
+                pointHoverBackgroundColor: 'rgba(255,255,255,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
             })),
         };
-    };
-
-    const getRandomColor = () => {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     };
 
     return (

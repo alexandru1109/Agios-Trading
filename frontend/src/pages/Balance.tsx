@@ -11,11 +11,7 @@ const Balance: React.FC = () => {
     useEffect(() => {
         const fetchBalance = async () => {
             try {
-                const response = await axios.get('/api/balance/get', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('authToken')}`
-                    }
-                });
+                const response = await axios.get('/balance/get');
                 setBalance(response.data.balance);
             } catch (error) {
                 setError('Error fetching balance');
@@ -29,11 +25,7 @@ const Balance: React.FC = () => {
 
     const handleUpdateBalance = async () => {
         try {
-            await axios.put('/api/balance/update', { amount: newBalance }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('authToken')}`
-                }
-            });
+            await axios.put('/balance/update', { amount: newBalance });
             setBalance(newBalance);
             alert('Balance updated successfully');
         } catch (error) {
