@@ -50,9 +50,16 @@ const StockList10: React.FC = () => {
     try {
       const response = await axios.post('/transactions/add', transaction);
       alert(`Bought ${quantity} unit(s) of ${symbol} at $${price}`);
-    } catch (error) {
-      console.error('Error buying stock:', error);
-      alert('Error buying stock');
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes('insufficient funds')) {
+          alert('Fonduri insuficiente');
+        } else {
+          alert('Eroare la cumpărare');
+        }
+      } else {
+        alert('Eroare la cumpărare');
+      }
     }
   };
 
@@ -70,9 +77,16 @@ const StockList10: React.FC = () => {
     try {
       const response = await axios.post('/transactions/add', transaction);
       alert(`Sold ${quantity} unit(s) of ${symbol} at $${price}`);
-    } catch (error) {
-      console.error('Error selling stock:', error);
-      alert('Error selling stock');
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes('insufficient stock')) {
+          alert('Stoc insuficient');
+        } else {
+          alert('Eroare la vânzare');
+        }
+      } else {
+        alert('Eroare la vânzare');
+      }
     }
   };
 

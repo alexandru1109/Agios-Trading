@@ -22,22 +22,40 @@ const Navbar: React.FC = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axios.get('/users/profile');
-                setProfile(response.data);
-                setIsLoadingProfile(false);
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    const response = await axios.get('/users/profile', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setProfile(response.data);
+                } else {
+                    setProfileError('User not authenticated');
+                }
             } catch (error) {
                 setProfileError('Error fetching profile data');
+            } finally {
                 setIsLoadingProfile(false);
             }
         };
 
         const fetchBalance = async () => {
             try {
-                const response = await axios.get('/balance/get');
-                setBalance(response.data.balance);
-                setIsLoadingBalance(false);
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    const response = await axios.get('/balance/get', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setBalance(response.data.balance);
+                } else {
+                    setBalanceError('User not authenticated');
+                }
             } catch (error) {
                 setBalanceError('Error fetching balance');
+            } finally {
                 setIsLoadingBalance(false);
             }
         };
@@ -94,8 +112,8 @@ const Navbar: React.FC = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/balance" className="button">
-                                <FaDollarSign className="icon" /> Balance
+                            <Link to="/transactions" className="button">
+                                <FaDollarSign className="icon" /> Transactions
                             </Link>
                         </li>
                     </ul>

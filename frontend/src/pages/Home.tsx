@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const fetchMarketSummary = async () => {
             try {
-                const response = await axios.get('market/market-summary');
+                const response = await axios.get('/market/market-summary');
                 setStocks(response.data.stocks);
                 setIsLoading(false);
             } catch (error) {
