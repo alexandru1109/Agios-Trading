@@ -65,7 +65,7 @@ export const subtractBalance = async (req: Request, res: Response) => {
     const balance = await Balance.findOne({ userId });
 
     if (!balance) {
-      return res.status(404).json({ message: 'Balance not found' });
+      return res.status(405).json({ message: 'Balance not found' });
     }
 
     if (balance.amount < amount) {

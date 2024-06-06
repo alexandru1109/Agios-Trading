@@ -13,7 +13,7 @@ export const getUserStocks = async (req: Request, res: Response) => {
     const stocks = await Stock.find({ userId }).exec();
 
     if (!stocks || stocks.length === 0) {
-      return res.status(404).json({ message: 'No stocks found for this user' });
+      return res.status(405).json({ message: 'No stocks found for this user' });
     }
 
     return res.status(200).json(stocks);
