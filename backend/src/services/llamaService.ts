@@ -23,7 +23,7 @@ export const getChatbotResponse = async (message: string): Promise<string> => {
     throw new Error('LLAMA_API_URL is not set');
   }
 
-  console.log('Sending request to Ollama API:', LLAMA_API_URL);
+  console.log('Sending request to chatbot service:', LLAMA_API_URL);
 
   try {
     const response = await axios.post(`${LLAMA_API_URL}/api/chat`, {
@@ -40,6 +40,7 @@ export const getChatbotResponse = async (message: string): Promise<string> => {
 
     let responseText = '';
 
+    // Handle data stream
     response.data.on('data', (chunk: Buffer) => {
       const lines = chunk.toString('utf8').split('\n').filter(line => line.trim() !== '');
       for (const line of lines) {
@@ -54,6 +55,7 @@ export const getChatbotResponse = async (message: string): Promise<string> => {
       }
     });
 
+    // Handle end and error events
     await new Promise<void>((resolve, reject) => {
       response.data.on('end', () => resolve());
       response.data.on('error', (err: Error) => reject(err));

@@ -16,7 +16,7 @@ const Chatbot: React.FC = () => {
 
   useEffect(() => {
     // Fetch initial messages with proper typing
-    axios.get<Message[]>('/chatbot/message')
+    axios.get<Message[]>('/chatbot/messages')
       .then(response => setMessages(response.data))
       .catch(error => console.error('Error fetching messages:', error));
   }, []);
