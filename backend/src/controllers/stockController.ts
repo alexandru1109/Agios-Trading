@@ -1,88 +1,30 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
-import moment from 'moment';
+import mongoose from 'mongoose';
+import Stock from '../models/stockModel';
 
-interface StockData {
-  labels: string[];
-  datasets: {
-    label: string;
-    data: number[];
-  }[];
-}
-
-const FINNHUB_API_URL = 'https://finnhub.io/api/v1';
-const FINNHUB_API_KEY = process.env.FINNHUB_API_KEY;
-
-export const getStockGraphData = async (req: Request, res: Response) => {
-  const symbol = req.query.symbol as string;
-  const mode = req.query.mode as string;
-
-  if (!symbol) {
-    return res.status(400).json({ message: 'Symbol is required' });
-  }
-
-  if (!['week', 'month', 'year'].includes(mode)) {
-    return res.status(400).json({ message: 'Invalid mode. Allowed values are: week, month, year' });
-  }
-
-  if (!FINNHUB_API_KEY) {
-    return res.status(500).json({ message: 'Stock API key is not set' });
-  }
-
-  console.log('Using Finnhub API Key:', FINNHUB_API_KEY);
-
+export const getUserStocks = async (req: Request, res: Response) => {
   try {
-    const now = moment();
-    let startDate: moment.Moment = now;
+    const userId = req.params.userId;
 
-    switch (mode) {
-      case 'week':
-        startDate = now.clone().subtract(1, 'week');
-        break;
-      case 'month':
-        startDate = now.clone().subtract(1, 'month');
-        break;
-      case 'year':
-        startDate = now.clone().subtract(1, 'year');
-        break;
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid user ID' });
     }
 
-    const response = await axios.get(`${FINNHUB_API_URL}/stock/candle`, {
-      params: {
-        symbol,
-        resolution: mode === 'week' ? '60' : 'D',
-        from: startDate.unix(),
-        to: now.unix(),
-        token: FINNHUB_API_KEY,
-      },
-    });
+    const stocks = await Stock.find({ userId }).exec();
 
-    const data = response.data;
-
-    if (data.s !== 'ok') {
-      return res.status(400).json({ message: 'Error fetching stock data' });
+    if (!stocks || stocks.length === 0) {
+      return res.status(404).json({ message: 'No stocks found for this user' });
     }
 
-    const labels = data.t.map((timestamp: number) => moment.unix(timestamp).format('YYYY-MM-DD'));
-    const prices = data.c;
-
-    const graphData: StockData = {
-      labels,
-      datasets: [
-        {
-          label: `${symbol} Stock Price`,
-          data: prices,
-        },
-      ],
-    };
-
-    res.status(200).json(graphData);
+    return res.status(200).json(stocks);
   } catch (error) {
-    console.error('Error fetching stock data:', error);
-    if (axios.isAxiosError(error)) {
-      res.status(500).json({ message: 'Error fetching stock data', error: error.message });
-    } else {
-      res.status(500).json({ message: 'Error fetching stock data', error: (error as Error).message });
+    if (error instanceof Error) {
+      return res.status(500).json({ message: 'Server error', error: error.message });
     }
+    return res.status(500).json({ message: 'Unknown server error' });
   }
+};
+
+export default {
+  getUserStocks,
 };

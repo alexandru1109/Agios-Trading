@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { getStockGraphData } from '../controllers/stockController';
+import stockController from '../controllers/stockController';
 
 const router = Router();
 
-router.get('/stock-graph', getStockGraphData);
+router.get('/get/:userId', (req, res) => {
+    console.log('Route matched');
+    stockController.getUserStocks(req, res);
+  });
+  
 
 export default router;
