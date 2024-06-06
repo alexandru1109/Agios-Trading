@@ -1,9 +1,16 @@
+import tensorflow as tf
 from model.model import create_model, train_model
 from training.fetch_data import fetch_stock_data
 from training.process_data import process_data
 from tensorflow.keras.models import load_model
 import numpy as np
 import os
+
+# Check for GPU availability
+if tf.config.list_physical_devices('GPU'):
+    print("Using GPU for training")
+else:
+    print("GPU not available, using CPU instead")
 
 api_key = 'KE1LFMJTUCSB616G'  # Your Alpha Vantage API Key
 symbols = ['TSLA', 'NVDA', 'GOOGL', 'AAPL', 'AMZN']  # Stock symbols
@@ -38,5 +45,10 @@ def predict(symbol):
     
     return predictions[-1][0], df['Close'].values
 
+<<<<<<< HEAD
 # if __name__ == "__main__":
     # train_and_save()  # Uncomment this line to train and save the model when running this file
+=======
+if __name__ == "__main__":
+    train_and_save()  # Uncomment this line to train and save the model when running this file
+>>>>>>> Adding_Ai_interations

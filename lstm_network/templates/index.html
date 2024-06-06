@@ -12,6 +12,7 @@
         <button type="submit">Predict</button>
     </form>
     <div id="prediction"></div>
+    <img id="plot" src="" alt="Stock Prices Plot" style="display: none;">
     <script>
         document.querySelector('form').onsubmit = async function(event) {
             event.preventDefault();
@@ -27,7 +28,9 @@
             if (data.error) {
                 document.getElementById('prediction').textContent = 'Error: ' + data.error;
             } else {
-                document.getElementById('prediction').innerHTML = `Predicted Close Price: ${data.prediction.toFixed(2)}<br>Last Actual Close Prices: ${data.historical_data.join(', ')}`;
+                document.getElementById('prediction').innerHTML = `Predicted Close Price: ${data.prediction.toFixed(2)}<br>Last Actual Close Price: ${data.first_closing_price.toFixed(2)}`;
+                document.getElementById('plot').src = '/static/plot.png';
+                document.getElementById('plot').style.display = 'block';
             }
         }
     </script>
