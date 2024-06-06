@@ -13,56 +13,63 @@ interface UserProfile {
 const Navbar: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile>({ name: '', role: '' });
     const [balance, setBalance] = useState<number | null>(null);
-    const [isLoadingProfile, setIsLoadingProfile] = useState(true);
-    const [isLoadingBalance, setIsLoadingBalance] = useState(true);
     const [profileError, setProfileError] = useState<string | null>(null);
     const [balanceError, setBalanceError] = useState<string | null>(null);
     const authContext = useContext(AuthContext);
 
     useEffect(() => {
         const fetchProfile = async () => {
+            console.log('Fetching profile...'); // Log function call
             try {
                 const token = localStorage.getItem('authToken');
+                console.log('Auth Token:', token); // Log the token
                 if (token) {
                     const response = await axios.get('/users/profile', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     });
+                    console.log('Profile Response:', response.data); // Log the response
                     setProfile(response.data);
                 } else {
+                    console.log('No token found');
                     setProfileError('User not authenticated');
                 }
             } catch (error) {
+                console.error('Error fetching profile data:', error); // Log the error
                 setProfileError('Error fetching profile data');
-            } finally {
-                setIsLoadingProfile(false);
             }
         };
 
         const fetchBalance = async () => {
+            console.log('Fetching balance...'); // Log function call
             try {
                 const token = localStorage.getItem('authToken');
+                console.log('Auth Token:', token); // Log the token
                 if (token) {
                     const response = await axios.get('/balance/get', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
                     });
+                    console.log('Balance Response:', response.data); // Log the response
                     setBalance(response.data.balance);
                 } else {
+                    console.log('No token found');
                     setBalanceError('User not authenticated');
                 }
             } catch (error) {
+                console.error('Error fetching balance:', error); // Log the error
                 setBalanceError('Error fetching balance');
-            } finally {
-                setIsLoadingBalance(false);
             }
         };
 
         if (authContext?.isAuthenticated) {
+            console.log('User is authenticated'); // Log authentication status
             fetchProfile();
             fetchBalance();
+        } else {
+            console.log('User is not authenticated');
         }
     }, [authContext]);
 
@@ -71,18 +78,14 @@ const Navbar: React.FC = () => {
             <div>
                 <Link to="/profile" className="profile-card">
                     <div className="profile-info">
-                        {isLoadingProfile ? (
-                            <p>Loading profile...</p>
-                        ) : profileError ? (
+                        {profileError ? (
                             <p>{profileError}</p>
                         ) : (
                             <>
                                 <div className="profile-name">{profile.name}</div>
                                 <div className="profile-title">{profile.role}</div>
                                 <div className="profile-balance">
-                                    Balance: {isLoadingBalance ? (
-                                        <span>Loading...</span>
-                                    ) : balanceError ? (
+                                    Balance: {balanceError ? (
                                         <span>{balanceError}</span>
                                     ) : (
                                         `$${balance?.toFixed(2)}`

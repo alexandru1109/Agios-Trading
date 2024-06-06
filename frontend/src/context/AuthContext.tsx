@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 import axios from '../config/axiosConfig';
 
 interface AuthContextType {
@@ -14,7 +14,9 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const login = async (username: string, password: string) => {
         try {
-            await axios.post('/auth/login', { username, password });
+            const response = await axios.post('/auth/login', { username, password });
+            const token = response.data.token; // Assuming the token is in the response
+            localStorage.setItem('authToken', token);
             setIsAuthenticated(true);
         } catch (error) {
             console.error('Login failed', error);
@@ -22,6 +24,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     };
 
     const logout = () => {
+        localStorage.removeItem('authToken');
         setIsAuthenticated(false);
     };
 
