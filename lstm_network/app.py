@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, jsonify, send_from_directory
-import main  # Ensure main.predict(symbol) works as expected
-import numpy as np
-import matplotlib.pyplot as plt
-import os
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
+import main
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/')
 def index():
@@ -12,32 +11,24 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    symbol = request.form['symbol']
+    data = request.get_json()
+    symbol = data.get('symbol')
     try:
         prediction, historical_data = main.predict(symbol)
-
-        # Ensure all elements are JSON serializable
-        prediction = float(prediction) if isinstance(prediction, np.float32) else prediction
-        historical_data = historical_data.tolist() if isinstance(historical_data, np.ndarray) else historical_data
-
-        # Save the plot
-        plot_path = os.path.join('static', 'plot.png')
-        plt.plot(historical_data)
-        plt.title(f'{symbol} Stock Prices')
-        plt.xlabel('Time')
-        plt.ylabel('Price')
-        plt.savefig(plot_path)
-        plt.close()
-
-        # Use the first historical price as the prediction
-        first_closing_price = historical_data[0] if historical_data else None
-        return jsonify({'prediction': first_closing_price, 'first_closing_price': first_closing_price})
+        return jsonify({'prediction': prediction, 'historical_data': historical_data.tolist()})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/static/<path:filename>')
-def serve_static(filename):
-    return send_from_directory('static', filename)
+@app.route('/should_buy', methods=['POST'])
+def should_buy():
+    data = request.get_json()
+    symbol = data.get('symbol')
+    try:
+        prediction, historical_data = main.predict(symbol)
+        decision = main.should_buy(prediction, historical_data[-1])
+        return jsonify({'prediction': prediction, 'last_close': historical_data[-1], 'decision': decision})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

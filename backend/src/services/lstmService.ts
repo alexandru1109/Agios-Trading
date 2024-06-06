@@ -1,27 +1,23 @@
-import axios from "axios";
-import { StockData } from "../utils/StockData";
+import axios from 'axios';
 
-export const fetchStockData = async (symbol: string): Promise<StockData[]> => {
-  const URL = "https://www.alphavantage.co/query";
-  const parameters = {
-    function: "TIME_SERIES_DAILY",
-    symbol: symbol,
-    outputsize: "full",
-    datatype: "json",
-    apikey: process.env.ALPHA_VANTAGE_API_KEY || "KE1LFMJTUCSB616G",
-  };
+const MODEL_URL = 'http://127.0.0.1:5000';
 
-  const response = await axios.get(URL, { params: parameters });
-  const data = response.data["Time Series (Daily)"];
+export const getPrediction = async (symbol: string) => {
+    const response = await axios.post(`${MODEL_URL}/predict`, { symbol }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const { prediction, historical_data } = response.data;
+    return { prediction, historicalData: historical_data };
+};
 
-  const df: StockData[] = Object.keys(data).map((date) => ({
-    date: new Date(date),
-    open: parseFloat(data[date]["1. open"]),
-    high: parseFloat(data[date]["2. high"]),
-    low: parseFloat(data[date]["3. low"]),
-    close: parseFloat(data[date]["4. close"]),
-    volume: parseFloat(data[date]["5. volume"]),
-  }));
-
-  return df.sort((a, b) => a.date.getTime() - b.date.getTime());
+export const shouldBuyStock = async (symbol: string) => {
+    const response = await axios.post(`${MODEL_URL}/should_buy`, { symbol }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const { prediction, last_close, decision } = response.data;
+    return { prediction, lastClose: last_close, decision };
 };
