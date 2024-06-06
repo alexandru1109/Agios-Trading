@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../../config/axiosConfig';
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto'; // This line is necessary to prevent issues with tree-shaking
+import 'chart.js/auto';
 
 const Chart = () => {
     const [chartData, setChartData] = useState<any>(null);
@@ -9,15 +9,13 @@ const Chart = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const token = localStorage.getItem('authToken'); // Adjust as needed based on how you store the token
+                const token = localStorage.getItem('authToken');
                 const response = await axios.get('/portfolio/portfolio-graph', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
                 });
                 const data = response.data;
-
-                // Format the data for Chart.js
                 const formattedData = formatDataForChart(data);
                 setChartData(formattedData);
             } catch (error) {
@@ -34,40 +32,27 @@ const Chart = () => {
             datasets: data.datasets.map((dataset: any) => ({
                 ...dataset,
                 fill: false,
-                borderColor: getRandomColor(),
+                borderColor: 'rgba(255,255,255,1)', // Linii albe
+                borderWidth: 2, // Linii îngroșate
+                backgroundColor: 'rgba(255,255,255,0.4)', // Fundal alb semi-transparent
+                pointBorderColor: 'rgba(255,255,255,1)', // Puncte albe
+                pointBackgroundColor: '#fff',
+                pointHoverBackgroundColor: 'rgba(255,255,255,1)',
+                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
             })),
         };
-    };
-
-    const getRandomColor = () => {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
     };
 
     return (
         <div className="chart">
             <h1>Portfolio Graph</h1>
             {chartData ? (
-                <Line
-                    data={chartData}
-                    options={{
-                        scales: {
-                            x: {
-                                type: 'category',
-                                labels: chartData.labels,
-                            },
-                            y: {
-                                beginAtZero: true,
-                            },
-                        },
-                    }}
-                />
+                <Line data={chartData} />
             ) : (
-                <p>Loading chart data...</p>
+                <p>Loading...</p>
             )}
         </div>
     );

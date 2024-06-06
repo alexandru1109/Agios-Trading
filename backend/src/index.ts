@@ -13,6 +13,8 @@ import cors from 'cors';
 import marketRoutes from './routes/marketRoutes';
 import portfolioRoutes from './routes/portfolioRoutes';
 import widgetRoutes from './routes/widgetRoutes';
+import balanceRoutes from './routes/balanceRoutes';
+import paymentRoutes from './routes/paymentRoutes';
 
 dotenv.config();
 
@@ -25,19 +27,22 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/stocks', stockRoutes);
+app.use('/api/stock', stockRoutes);
 app.use('/api/transactions', transactionRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 app.use('/api/portfolio', portfolioRoutes);
 app.use('/api/market', marketRoutes);
 app.use('/api/widgets', widgetRoutes);
-
-app.get('/api/protected', authMiddleware, (req, res) => {
-  res.send('This is a protected route');
-});
+app.use('/api/balance', balanceRoutes);
+app.use('/api/payment', paymentRoutes);
 
 app.use(errorMiddleware);
+
+app.use((req, res) => {
+  res.status(404).send('Route not found');
+});
+
 
 const PORT = process.env.PORT || 5000;
 const LLAMA_API_URL = process.env.LLAMA_API_URL;

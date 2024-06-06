@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig'; // Ensure correct path
 import './BusinessNews.css';
+import Navbar from '../components/Home/Navbar'; // Adjust the path to match your project structure
 
 interface NewsArticle {
     title: string;
@@ -11,7 +12,7 @@ interface NewsArticle {
     };
 }
 
-const News: React.FC = () => {
+const BusinessNews: React.FC = () => {
     const [news, setNews] = useState<NewsArticle[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -31,26 +32,36 @@ const News: React.FC = () => {
         fetchMarketNews();
     }, []);
 
+    const handleArticleClick = (url: string) => {
+        window.location.href = url;
+    };
+
     return (
-        <div className="news-container">
-            <h2>Market News</h2>
-            {isLoading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>{error}</p>
-            ) : (
-                news.map((article, index) => (
-                    <div key={index} className="news-article">
-                        <h4>{article.title}</h4>
-                        <p>{article.description}</p>
-                        <a href={article.url} target="_blank" rel="noopener noreferrer">
-                            Read more at {article.source.name}
-                        </a>
-                    </div>
-                ))
-            )}
+        <div className="business-news-container">
+            <Navbar />
+            <div className="news-content">
+                <h2>Business info</h2>
+                <div className="news-scroll-container">
+                    {isLoading ? (
+                        <p>Loading...</p>
+                    ) : error ? (
+                        <p>{error}</p>
+                    ) : (
+                        news.map((article, index) => (
+                            <div
+                                key={index}
+                                className="news-article"
+                                onClick={() => handleArticleClick(article.url)}
+                            >
+                                <h4>{article.title}</h4>
+                                <p>{article.description}</p>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
         </div>
     );
 };
 
-export default News;
+export default BusinessNews;

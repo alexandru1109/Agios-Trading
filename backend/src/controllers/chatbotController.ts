@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
+import { getChatbotResponse } from '../services/llamaService';
 
-const LLAMA_API_URL = process.env.LLAMA_API_URL || '';
-
-interface ChatbotResponseData {
+// Define the Message type
+interface Message {
+  id: number;
   text: string;
-}
-
-interface ChatbotResponse {
-  data: ChatbotResponseData[];
+  sender: 'user' | 'bot';
 }
 
 export const chatWithBot = async (req: Request, res: Response) => {
@@ -19,20 +16,25 @@ export const chatWithBot = async (req: Request, res: Response) => {
   }
 
   try {
-    const response = await axios.post<ChatbotResponse>(`${LLAMA_API_URL}/api/generate`, {
-      model: 'llama3',
-      prompt: message,
-      options: {
-        num_ctx: 4096
-      }
-    });
-
-    // const responseData: ChatbotResponseData[] = response.data;
-    // const responseText = responseData.length > 0 ? responseData[0].text : 'No response from bot';
-
-    // return res.status(200).json({ response: responseText });
+    const responseText = await getChatbotResponse(message);
+    return res.status(200).json({ text: responseText });
   } catch (error) {
-    console.error('Error communicating with Ollama API:', error);
+    console.error('Error communicating with the chatbot service:', error);
     res.status(500).json({ message: 'Failed to fetch chatbot response' });
+  }
+};
+
+export const getInitialMessages = async (req: Request, res: Response) => {
+  try {
+    // Define initial messages with proper typing
+    const initialMessages: Message[] = [
+      { id: 1, text: "Welcome to the chatbot!", sender: "bot" }
+      // You can add more predefined messages here
+    ];
+
+    return res.status(200).json(initialMessages);
+  } catch (error) {
+    console.error('Error fetching initial messages:', error);
+    res.status(500).json({ message: 'Failed to fetch initial messages' });
   }
 };

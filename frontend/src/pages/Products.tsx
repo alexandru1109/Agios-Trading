@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig';
 import './Products.css';
+import Navbar from '../components/Home/Navbar'; // Corrected import path
 
 interface Stock {
   symbol: string;
@@ -36,70 +37,105 @@ const StockList10: React.FC = () => {
   }, []);
 
   const handleBuy = async (symbol: string, price: number) => {
-    const quantity = 1; 
+    const quantity = 1;
     const transaction = {
       type: 'buy',
       quantity,
       price,
       date: new Date(),
       symbol,
-      strategy: 'default', 
+      strategy: 'default',
     };
 
     try {
       const response = await axios.post('/transactions/add', transaction);
       alert(`Bought ${quantity} unit(s) of ${symbol} at $${price}`);
-    } catch (error) {
-      console.error('Error buying stock:', error);
-      alert('Error buying stock');
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes('insufficient funds')) {
+          alert('Fonduri insuficiente');
+        } else {
+          alert('Eroare la cumpărare');
+        }
+      } else {
+        alert('Eroare la cumpărare');
+      }
     }
   };
 
   const handleSell = async (symbol: string, price: number) => {
-    const quantity = 1; 
+    const quantity = 1;
     const transaction = {
       type: 'sell',
       quantity,
       price,
       date: new Date(),
       symbol,
-      strategy: 'default', 
+      strategy: 'default',
     };
 
     try {
       const response = await axios.post('/transactions/add', transaction);
       alert(`Sold ${quantity} unit(s) of ${symbol} at $${price}`);
-    } catch (error) {
-      console.error('Error selling stock:', error);
-      alert('Error selling stock');
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        if (error.response.data.message.includes('insufficient stock')) {
+          alert('Stoc insuficient');
+        } else {
+          alert('Eroare la vânzare');
+        }
+      } else {
+        alert('Eroare la vânzare');
+      }
     }
   };
 
   return (
     <div className="stock-list-container">
-      <h1>Stock Market</h1>
-      {isLoading ? (
-        <p>Loading stocks...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : (
-        <div className="stock-list">
-          {stocks.map(stock => (
-            <div key={stock.symbol} className="stock-item">
-              <h2>{stock.symbol}</h2>
-              <p>Current Price: ${stock.currentPrice}</p>
-              <p>High Price: ${stock.highPrice}</p>
-              <p>Low Price: ${stock.lowPrice}</p>
-              <p>Open Price: ${stock.openPrice}</p>
-              <p>Previous Close Price: ${stock.previousClosePrice}</p>
-              <div className="stock-buttons">
-                <button onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
-                <button onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
+      <Navbar />
+      <div className="stock-list-content">
+        <h1>Stock Market</h1>
+        {isLoading ? (
+          <p>Loading stocks...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <div className="stock-list">
+            {stocks.map(stock => (
+              <div key={stock.symbol} className="stock-item">
+                <div className="stock-header">
+                  <div className="logo-placeholder"></div>
+                  <h2>{stock.symbol}</h2>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Current Price:</span>
+                  <span className="stock-value">${stock.currentPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">High Price:</span>
+                  <span className="stock-value">${stock.highPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Low Price:</span>
+                  <span className="stock-value">${stock.lowPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Open Price:</span>
+                  <span className="stock-value">${stock.openPrice}</span>
+                </div>
+                <div className="stock-details">
+                  <span className="stock-label">Previous Close Price:</span>
+                  <span className="stock-value">${stock.previousClosePrice}</span>
+                </div>
+                <div className="stock-buttons">
+                  <button className="buy-button" onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
+                  <button className="sell-button" onClick={() => handleSell(stock.symbol, stock.currentPrice)}>Sell</button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,26 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Document } from 'mongoose';
 
-const marketSchema = new mongoose.Schema(
-  {
-    symbol: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    history: {
-      type: Array, 
-      required: false,
-    },
-    indicators: {
-      type: Object,
-      required: false,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+export interface IStock extends Document {
+  userId: mongoose.Schema.Types.ObjectId;
+  symbol: string;
+  quantity: number;
+  averagePrice: number;
+}
 
-const Market = mongoose.model('Market', marketSchema);
+const stockSchema: Schema = new Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  symbol: { type: String, required: true },
+  quantity: { type: Number, required: true },
+  averagePrice: { type: Number, required: true },
+});
 
-export default Market;
+const Stock = mongoose.model<IStock>('Stock', stockSchema);
+
+export default Stock;

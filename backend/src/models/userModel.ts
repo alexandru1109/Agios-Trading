@@ -6,17 +6,22 @@ export interface IUser extends Document {
   passHash: string;
   role: string;
   strategy: string;
+  isVerified: boolean;
+  verificationToken: string;
+  otp?: string;
+  otpExpiry?: Date;
 }
 
-const userSchema: Schema = new Schema({
+const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   passHash: { type: String, required: true },
   role: { type: String, required: true },
   strategy: { type: String, required: true },
-  balance: { type: String, required: false }
+  isVerified: { type: Boolean, default: false },
+  verificationToken: { type: String },
+  otp: { type: String },
+  otpExpiry: { type: Date }
 });
 
-const User = mongoose.model<IUser>('User', userSchema);
-
-export default User;
+export default mongoose.model<IUser>('User', UserSchema);

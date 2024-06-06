@@ -1,41 +1,30 @@
 import { Request, Response } from 'express';
-import stockService from '../services/stockService';
+import mongoose from 'mongoose';
+import Stock from '../models/stockModel';
 
-class StockController {
-  async getStockData(req: Request, res: Response) {
-    try {
-      const data = await stockService.getStockData(req.params.symbol);
-      res.status(200).json(data);
-    } catch (error) {
-      this.handleError(res, error);
+export const getUserStocks = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid user ID' });
     }
-  }
 
-  async updateStockData(req: Request, res: Response) {
-    try {
-      const updatedData = await stockService.updateStockData(req.params.symbol, req.body);
-      res.status(200).json(updatedData);
-    } catch (error) {
-      this.handleError(res, error);
+    const stocks = await Stock.find({ userId }).exec();
+
+    if (!stocks || stocks.length === 0) {
+      return res.status(405).json({ message: 'No stocks found for this user' });
     }
-  }
 
-  async createStockData(req: Request, res: Response) {
-    try {
-      const newStock = await stockService.createStockData(req.body);
-      res.status(201).json(newStock);
-    } catch (error) {
-      this.handleError(res, error);
-    }
-  }
-
-  private handleError(res: Response, error: unknown) {
+    return res.status(200).json(stocks);
+  } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({ message: error.message });
-    } else {
-      res.status(500).json({ message: 'An unknown error occurred' });
+      return res.status(500).json({ message: 'Server error', error: error.message });
     }
+    return res.status(500).json({ message: 'Unknown server error' });
   }
-}
+};
 
-export default new StockController();
+export default {
+  getUserStocks,
+};

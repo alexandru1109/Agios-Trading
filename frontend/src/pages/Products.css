@@ -1,69 +1,104 @@
 .stock-list-container {
-    padding: 20px;
-    background-color: #1a1a2e; /* dark background */
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-    margin: 0 auto;
-    color: #fff; /* white text */
+    display: flex;
+    height: 100vh; /* Similar to .business-news-container */
+    margin-left: 290px;
+    background-color: #13524b; /* Same background color */
 }
 
-h1 {
-    text-align: center;
-    color: #fff; /* white text */
-    margin-bottom: 20px;
+.stock-list-content {
+    color: #ecf0f1; /* Same text color */
+    flex-grow: 1;
+    padding: 20px;
+   
+    /* Adjust this value if necessary to match the width of your Navbar */
 }
 
 .stock-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    max-height: 80vh;
+    /* Adjust this value as necessary */
+    overflow-y: auto;
+    padding-right: 10px;
+    /* Space for scrollbar */
 }
 
 .stock-item {
-    background-color: #2a2a40; /* slightly lighter dark background */
-    border: 1px solid #3a3a5e; /* darker border */
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    width: calc(33.333% - 40px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 5px; /* Same margin */
+    padding: 10px; /* Same padding */
+    background-color: #162447; /* Same background color */
+    color: #ecf0f1; /* Same text color */
+    border-radius: 5px; /* Same border radius */
+    text-decoration: none; /* Remove underline */
+    display: flex; /* Ensure it takes the full space */
+    flex-direction: column; /* Align content vertically */
+    align-items: flex-start; /* Align content to the left */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for consistency */
+    transition: background-color 0.3s; /* Same transition */
+    cursor: default; /* Change cursor to default */
 }
 
-.stock-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.stock-item h2 {
-    color: #2ec4b6; /* teal color for headers */
+.stock-header {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
 }
 
-.stock-item p {
-    margin: 5px 0;
-    color: #a9a9a9; /* light grey text for descriptions */
+.logo-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.stock-header h2 {
+    margin: 0;
+}
+
+.stock-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.stock-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.stock-value {
+    font-weight: normal;
 }
 
 .stock-buttons {
-    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ensure the buttons span the full width */
+    margin-top: 10px; /* Add some space above the buttons */
 }
 
 .stock-buttons button {
-    background-color: #2ec4b6; /* teal button */
-    color: #1a1a2e; /* dark text on button */
+    padding: 5px 10px;
     border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s; /* Add transition for smooth hover effect */
 }
 
-.stock-buttons button:hover {
-    background-color: #2aa5a0; /* darker teal on hover */
+.stock-buttons .buy-button {
+    background-color: #007bff;
+    color: white;
 }
 
-.stock-buttons button + button {
-    margin-left: 10px;
+.stock-buttons .buy-button:hover {
+    background-color: #00a706; /* Green for buy button */
+}
+
+.stock-buttons .sell-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.stock-buttons .sell-button:hover {
+    background-color: #b7000f; /* Red for sell button */
 }

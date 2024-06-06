@@ -1,10 +1,20 @@
 .chart {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 20px;
+    align-items: flex-start; /* Aliniem conținutul la stânga */
+    margin: 20px; /* Micșorăm margin pentru a se încadra mai bine */
+    height: 100%; /* Asigurăm că graficul ocupă întreg spațiul vertical disponibil */
+    width: 100%; /* Asigurăm că graficul ocupă întreg spațiul orizontal disponibil */
+    background-color: #f0f0f0; /* Fundal deschis */
+    color: #333; /* Text închis pentru contrast */
 }
 
 .chart h1 {
-    margin-bottom: 20px;
+    font-size: 18px; /* Micșorăm dimensiunea fontului */
+    margin-bottom: 10px; /* Micșorăm margin pentru a economisi spațiu */
+}
+
+.chart-line {
+    stroke: white; /* Culoare albă pentru linii */
+    stroke-width: 2px; /* Linii îngroșate */
 }

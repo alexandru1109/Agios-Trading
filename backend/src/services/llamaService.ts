@@ -5,13 +5,16 @@ dotenv.config();
 
 const LLAMA_API_URL = process.env.LLAMA_API_URL || '';
 
-interface ChatbotResponseData {
-  text: string;
+interface Message {
+  role: string;
+  content: string;
 }
 
 interface ChatbotResponse {
-  text: string | PromiseLike<string>;
-  data: ChatbotResponseData;
+  model: string;
+  created_at: string;
+  message: Message;
+  done: boolean;
 }
 
 export const getChatbotResponse = async (message: string): Promise<string> => {
@@ -20,25 +23,45 @@ export const getChatbotResponse = async (message: string): Promise<string> => {
     throw new Error('LLAMA_API_URL is not set');
   }
 
-  console.log('Sending request to Ollama API:', LLAMA_API_URL);
+  console.log('Sending request to chatbot service:', LLAMA_API_URL);
 
   try {
-    const response = await axios.post<ChatbotResponse>(`${LLAMA_API_URL}/api/generate`, {
+    const response = await axios.post(`${LLAMA_API_URL}/api/chat`, {
       model: 'llama3',
-      prompt: message,
-      options: {
-        num_ctx: 4096
+      messages: [
+        {
+          role: 'user',
+          content: message
+        }
+      ]
+    }, {
+      responseType: 'stream'
+    });
+
+    let responseText = '';
+
+    // Handle data stream
+    response.data.on('data', (chunk: Buffer) => {
+      const lines = chunk.toString('utf8').split('\n').filter(line => line.trim() !== '');
+      for (const line of lines) {
+        try {
+          const parsedLine = JSON.parse(line);
+          if (parsedLine.message && parsedLine.message.role === 'assistant') {
+            responseText += `${parsedLine.message.content} `;
+          }
+        } catch (error) {
+          console.error('Failed to parse line as JSON:', line);
+        }
       }
     });
-    console.log('Request payload:', {
-      model: 'llama3',
-      prompt: message,
-      options: {
-        num_ctx: 4096
-      }
+
+    // Handle end and error events
+    await new Promise<void>((resolve, reject) => {
+      response.data.on('end', () => resolve());
+      response.data.on('error', (err: Error) => reject(err));
     });
-    console.log('Response from Ollama API:', response.data);
-    return response.data.text;
+
+    return responseText.trim();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios error:', error.message, error.response?.data);

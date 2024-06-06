@@ -6,6 +6,7 @@ import './Login.css';
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async (event: React.FormEvent) => {
@@ -15,8 +16,9 @@ const Login: React.FC = () => {
             const { token, userId } = response.data;
             localStorage.setItem('authToken', token);
             localStorage.setItem('userId', userId);
-            navigate('/home');
+            navigate('/otp', { state: { email, password } }); // Transmite email și parolă
         } catch (error) {
+            setErrorMessage('Invalid email or password.');
             console.error('There was an error logging in!', error);
         }
     };
@@ -25,6 +27,7 @@ const Login: React.FC = () => {
         <div className="login-container">
             <div className="login-card">
                 <h2>Login</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <form onSubmit={handleLogin}>
                     <input
                         type="email"
