@@ -92,8 +92,8 @@ export const getTransactionHistory = async (req: Request, res: Response) => {
 
   try {
     const transactions = await Transaction.find({ userId });
-
-    res.status(200).json(transactions);
+    console.log('Transactions:', transactions); 
+    res.status(200).json({ transactions }); 
   } catch (error) {
     console.error('Error fetching transaction history:', error);
     res.status(500).json({ message: 'Error fetching transaction history', error });
