@@ -1,5 +1,4 @@
-/* Login.css */
-.login-container {
+.otp-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +6,7 @@
     background: #2ec4b6;
 }
 
-.login-card {
+.otp-card {
     background: #1a1a2e;
     padding: 40px;
     border-radius: 10px;
@@ -16,7 +15,7 @@
     width: 300px;
 }
 
-.login-card h2 {
+.otp-card h2 {
     margin-bottom: 20px;
     color: #fff;
 }
@@ -29,12 +28,12 @@
     margin-bottom: 20px;
 }
 
-.login-card form {
+.otp-card form {
     display: flex;
     flex-direction: column;
 }
 
-.login-card input {
+.otp-card input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -44,11 +43,11 @@
     color: #fff;
 }
 
-.login-card input::placeholder {
+.otp-card input::placeholder {
     color: #a9a9a9;
 }
 
-.login-card button {
+.otp-card button {
     width: 100%;
     padding: 10px;
     background: #2ec4b6;
@@ -59,27 +58,22 @@
     transition: background 0.3s;
 }
 
-.login-card button:hover {
+.otp-card button:hover {
     background: #1ec1a6;
 }
 
-.login-card p {
-    color: #fff;
-    margin-top: 20px;
+.retry-button {
+    width: 100%;
+    padding: 10px;
+    background: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
 }
 
-.login-card p a {
-    color: #2ec4b6;
-    text-decoration: none;
-}
-
-.login-card p a:hover {
-    text-decoration: underline;
-}
-
-.login-card .forgot-password {
-    color: #a9a9a9;
-    margin-bottom: 20px;
-    display: block;
-    text-align: left;
+.retry-button:hover {
+    background: #fb8c00;
 }

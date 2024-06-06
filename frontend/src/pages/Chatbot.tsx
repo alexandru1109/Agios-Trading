@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../config/axiosConfig';
 import './Chatbot.css';
+import Navbar from '../components/Home/Navbar'; // Corrected import path
 
 // Define the message type
 interface Message {
@@ -9,7 +10,7 @@ interface Message {
   sender: 'user' | 'bot';
 }
 
-const Chatbot = () => {
+const Chatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
 
@@ -37,23 +38,28 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="chatbot-container">
-      <div className="chatbot-messages">
-        {messages.map((msg, index) => (
-          <div key={index} className={`chatbot-message ${msg.sender}`}>
-            {msg.text}
+    <div className="chatbot-page-container">
+      <Navbar />
+      <div className="chatbot-content">
+        <div className="chatbot-container">
+          <div className="chatbot-messages">
+            {messages.map((msg, index) => (
+              <div key={index} className={`chatbot-message ${msg.sender}`}>
+                {msg.text}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="chatbot-input-container">
-        <input
-          type="text"
-          className="chatbot-input"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
-        />
-        <button className="chatbot-button" onClick={handleSendMessage}>Send</button>
+          <div className="chatbot-input-container">
+            <input
+              type="text"
+              className="chatbot-input"
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' ? handleSendMessage() : null}
+            />
+            <button className="chatbot-button" onClick={handleSendMessage}>Send</button>
+          </div>
+        </div>
       </div>
     </div>
   );

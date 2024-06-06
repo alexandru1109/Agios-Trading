@@ -32,11 +32,15 @@ const BusinessNews: React.FC = () => {
         fetchMarketNews();
     }, []);
 
+    const handleArticleClick = (url: string) => {
+        window.location.href = url;
+    };
+
     return (
         <div className="business-news-container">
             <Navbar />
             <div className="news-content">
-                <h2>Market News</h2>
+                <h2>Business info</h2>
                 <div className="news-scroll-container">
                     {isLoading ? (
                         <p>Loading...</p>
@@ -44,12 +48,13 @@ const BusinessNews: React.FC = () => {
                         <p>{error}</p>
                     ) : (
                         news.map((article, index) => (
-                            <div key={index} className="news-article">
+                            <div
+                                key={index}
+                                className="news-article"
+                                onClick={() => handleArticleClick(article.url)}
+                            >
                                 <h4>{article.title}</h4>
                                 <p>{article.description}</p>
-                                <a href={article.url} target="_blank" rel="noopener noreferrer">
-                                    Read more at {article.source.name}
-                                </a>
                             </div>
                         ))
                     )}

@@ -1,13 +1,15 @@
 .stock-list-container {
     display: flex;
-    margin-left: 3rem;
-    margin-right: 3rem;
+    height: 100vh; /* Similar to .business-news-container */
+    margin-left: 290px;
+    background-color: #13524b; /* Same background color */
 }
 
 .stock-list-content {
+    color: #ecf0f1; /* Same text color */
     flex-grow: 1;
     padding: 20px;
-    margin-left: 220px;
+   
     /* Adjust this value if necessary to match the width of your Navbar */
 }
 
@@ -20,35 +22,83 @@
 }
 
 .stock-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 5px; /* Same margin */
+    padding: 10px; /* Same padding */
+    background-color: #162447; /* Same background color */
+    color: #ecf0f1; /* Same text color */
+    border-radius: 5px; /* Same border radius */
+    text-decoration: none; /* Remove underline */
+    display: flex; /* Ensure it takes the full space */
+    flex-direction: column; /* Align content vertically */
+    align-items: flex-start; /* Align content to the left */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for consistency */
+    transition: background-color 0.3s; /* Same transition */
+    cursor: default; /* Change cursor to default */
+}
+
+.stock-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.logo-placeholder {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    margin-right: 10px;
     border-radius: 5px;
 }
 
-.stock-item h2 {
-    margin: 0 0 10px;
+.stock-header h2 {
+    margin: 0;
 }
 
-.stock-item p {
-    margin: 0 0 10px;
+.stock-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.stock-label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.stock-value {
+    font-weight: normal;
 }
 
 .stock-buttons {
     display: flex;
     justify-content: space-between;
+    width: 100%; /* Ensure the buttons span the full width */
+    margin-top: 10px; /* Add some space above the buttons */
 }
 
 .stock-buttons button {
     padding: 5px 10px;
     border: none;
-    background-color: #007bff;
-    color: white;
     border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.3s; /* Add transition for smooth hover effect */
 }
 
-.stock-buttons button:hover {
-    background-color: #0056b3;
+.stock-buttons .buy-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.stock-buttons .buy-button:hover {
+    background-color: #00a706; /* Green for buy button */
+}
+
+.stock-buttons .sell-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.stock-buttons .sell-button:hover {
+    background-color: #b7000f; /* Red for sell button */
 }

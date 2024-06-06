@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from '../config/axiosConfig';
 import './Home.css';
 import Card from '../components/Home/Card';
 import Chart from '../components/Home/Chart';
-import Navbar from '../components/Home/Navbar'; // Import Navbar
-import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Home/Navbar';
 
 interface Stock {
     symbol: string;
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     useEffect(() => {
         const fetchMarketSummary = async () => {
             try {
-                const response = await axios.get('market/market-summary');
+                const response = await axios.get('/market/market-summary');
                 setStocks(response.data.stocks);
                 setIsLoading(false);
             } catch (error) {
@@ -58,15 +58,24 @@ const Home: React.FC = () => {
                     ) : error ? (
                         <p>{error}</p>
                     ) : (
-                        stocks.map((stock, index) => (
-                            <Card
-                                key={index}
-                                title={stock.symbol}
-                                value={`$${stock.currentPrice.toFixed(2)}`}
-                                change={`$${(stock.currentPrice - stock.previousClosePrice).toFixed(2)} (${((stock.currentPrice - stock.previousClosePrice) / stock.previousClosePrice * 100).toFixed(2)}%)`}
-                                color={stock.currentPrice > stock.previousClosePrice ? 'green' : 'red'}
-                            />
-                        ))
+                        stocks.map((stock, index) => {
+                            const cardColors = ['green', 'red', 'blue'];
+                            return (
+                                <Link
+                                    key={index}
+                                    to={`/stocks/${stock.symbol}`}
+                                    className={`card ${cardColors[index % cardColors.length]}`}
+                                >
+                                    <div className="card-content">
+                                        <div className="card-title">{stock.symbol}</div>
+                                        <div className="card-value">${stock.currentPrice.toFixed(2)}</div>
+                                        <div className={`card-change ${stock.currentPrice > stock.previousClosePrice ? 'green' : 'red'}`}>
+                                            {`$${(stock.currentPrice - stock.previousClosePrice).toFixed(2)} (${((stock.currentPrice - stock.previousClosePrice) / stock.previousClosePrice * 100).toFixed(2)}%)`}
+                                        </div>
+                                    </div>
+                                </Link>
+                            );
+                        })
                     )}
                 </div>
                 <div className="chart-container">
