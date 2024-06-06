@@ -1,58 +1,114 @@
-import React, { useEffect, useState } from 'react';
-import axios from '../../config/axiosConfig';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
+import './Chart.css';
+
+interface GraphData {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        borderColor?: string;
+        backgroundColor?: string;
+    }[];
+}
+
+// Înregistrăm scale-urile
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
 
 const Chart = () => {
-    const [chartData, setChartData] = useState<any>(null);
+    const [graphData, setGraphData] = useState<GraphData | null>(null);
+    const [mode, setMode] = useState('week');
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const token = localStorage.getItem('authToken');
-                const response = await axios.get('/portfolio/portfolio-graph', {
+    const fetchGraphData = async (mode: string) => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                const response = await axios.get(`http://localhost:5869/api/portfolio/portfolio-graph`, {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
+                    },
+                    params: {
+                        mode: mode,
                     },
                 });
-                const data = response.data;
-                const formattedData = formatDataForChart(data);
-                setChartData(formattedData);
-            } catch (error) {
-                console.error('Error fetching portfolio graph data', error);
+                if (response.data && response.data.labels && response.data.datasets) {
+                    setGraphData(response.data);
+                } else {
+                    setError('Invalid response format');
+                }
+            } else {
+                setError('No token found');
             }
-        };
-
-        fetchData();
-    }, []);
-
-    const formatDataForChart = (data: any) => {
-        return {
-            labels: data.labels,
-            datasets: data.datasets.map((dataset: any) => ({
-                ...dataset,
-                fill: false,
-                borderColor: 'rgba(255,255,255,1)', // Linii albe
-                borderWidth: 2, // Linii îngroșate
-                backgroundColor: 'rgba(255,255,255,0.4)', // Fundal alb semi-transparent
-                pointBorderColor: 'rgba(255,255,255,1)', // Puncte albe
-                pointBackgroundColor: '#fff',
-                pointHoverBackgroundColor: 'rgba(255,255,255,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-            })),
-        };
+        } catch (error) {
+            console.error('Error fetching graph data:', error);
+            setError('Error fetching graph data');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
+    useEffect(() => {
+        let isMounted = true;
+        fetchGraphData(mode).then(() => {
+            if (isMounted) setIsLoading(false);
+        });
+        return () => {
+            isMounted = false;
+        };
+    }, [mode]);
+
     return (
-        <div className="chart">
-            <h1>Portfolio Graph</h1>
-            {chartData ? (
-                <Line data={chartData} />
+        <div className="chart-container">
+            <div className="chart-header">
+                <h1>Portfolio Graph</h1>
+                <div className="chart-buttons">
+                    <button className={mode === 'week' ? 'active' : ''} onClick={() => setMode('week')}>Week</button>
+                    <button className={mode === 'month' ? 'active' : ''} onClick={() => setMode('month')}>Month</button>
+                    <button className={mode === 'year' ? 'active' : ''} onClick={() => setMode('year')}>Year</button>
+                </div>
+            </div>
+            {error && <div className="error">{error}</div>}
+            {isLoading ? (
+                <div>Loading...</div>
             ) : (
-                <p>Loading...</p>
+                <div className="chart-content">
+                    {graphData && (
+                        <Line
+                            data={{
+                                labels: graphData.labels,
+                                datasets: graphData.datasets.map(dataset => ({
+                                    ...dataset,
+                                    borderColor: dataset.borderColor || '#4caf50',
+                                    backgroundColor: dataset.backgroundColor || 'rgba(76, 175, 80, 0.2)',
+                                })),
+                            }}
+                            options={{
+                                maintainAspectRatio: false,
+                            }}
+                        />
+                    )}
+                </div>
             )}
         </div>
     );

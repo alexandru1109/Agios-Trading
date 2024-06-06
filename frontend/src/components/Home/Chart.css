@@ -1,20 +1,53 @@
-.chart {
+.chart-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aliniem conținutul la stânga */
-    margin: 20px; /* Micșorăm margin pentru a se încadra mai bine */
-    height: 100%; /* Asigurăm că graficul ocupă întreg spațiul vertical disponibil */
-    width: 100%; /* Asigurăm că graficul ocupă întreg spațiul orizontal disponibil */
-    background-color: #f0f0f0; /* Fundal deschis */
-    color: #333; /* Text închis pentru contrast */
+    flex-grow: 1;
+    margin-left: 290px; /* Ajustare pentru alinierea corectă */
+    margin-bottom: 20px;
+    height: calc(100vh - 60px); /* Mărim înălțimea graficului pentru a ocupa tot spațiul */
+    background-color: #13524b; /* Fundal verde închis */
+    overflow-y: hidden; /* Eliminăm scroll-ul vertical */
+    overflow-x: hidden; /* Eliminăm scroll-ul orizontal */
+    padding: 20px; /* Spațiu interior */
+    color: #ecf0f1; /* Culoarea textului similară cu navbar-links li a */
 }
 
-.chart h1 {
-    font-size: 18px; /* Micșorăm dimensiunea fontului */
-    margin-bottom: 10px; /* Micșorăm margin pentru a economisi spațiu */
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.chart-line {
-    stroke: white; /* Culoare albă pentru linii */
-    stroke-width: 2px; /* Linii îngroșate */
+.chart-header h1 {
+    margin: 0;
+    font-size: 18px; /* Dimensiunea fontului */
+    color: #ecf0f1; /* Culoarea textului */
+}
+
+.chart-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.chart-buttons button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chart-buttons button.active,
+.chart-buttons button:hover {
+    background-color: #45a049;
+}
+
+.chart-content {
+    flex-grow: 1;
+    overflow-y: hidden; /* Eliminăm scroll-ul vertical */
+    overflow-x: hidden; /* Eliminăm scroll-ul orizontal */
 }
