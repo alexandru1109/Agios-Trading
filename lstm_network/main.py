@@ -38,5 +38,5 @@ def predict(symbol):
     
     return predictions[-1][0], df['Close'].values
 
-if __name__ == "__main__":
-    train_and_save()  # Uncomment this line to train and save the model when running this file
+# if __name__ == "__main__":
+    # train_and_save()  # Uncomment this line to train and save the model when running this file
