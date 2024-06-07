@@ -57,34 +57,12 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #f9f9f9;
-    color: #333;
+    color: #f9f9f9;
 }
 
 .profile-field p {
     flex: 1;
     padding: 10px;
-    color: #666;
+    color: #f9f9f9;
     margin: 0;
-}
-
-.profile-card {
-    background-color: #13524b; /* Similar cu cardurile din Home.css */
-    color: white; /* Text alb */
-    border: none; /* Eliminăm bordura */
-    padding: 30px 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(33.333% - 30px);
-    min-width: 50px;
-    max-width: 250px;
-    text-decoration: none; /* Asigură că link-ul nu are subliniere */
-    display: block; /* Asigură că link-ul ocupă întregul spațiu al cardului */
-    transition: background-color 0.3s, transform 0.3s; /* Adăugăm tranziția */
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.profile-card:hover {
-    background-color: #2ec4b6; /* Schimbă culoarea de fundal la hover */
-    color: inherit; /* Păstrează culoarea textului la hover */
 }

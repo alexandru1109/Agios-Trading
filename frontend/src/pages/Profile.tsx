@@ -70,10 +70,6 @@ const Profile: React.FC = () => {
             <Navbar />
             <div className="profile-content">
                 <div className="profile-card">
-                    <div className="profile-header">
-                        <img src="/path/to/profile-pic.png" alt="Profile" />
-                        <h2>{profile.name}</h2>
-                    </div>
                     <div className="profile-content">
                         <form>
                             <div className="profile-field">

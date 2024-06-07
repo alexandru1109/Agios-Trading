@@ -1,0 +1,46 @@
+.profile-card {
+    margin: 20px 0;
+    padding: 30px 20px;
+    background-color: #13524b;
+    color: #F4F4F8;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+}
+
+.profile-card:hover {
+    background-color: #4CAF50;
+    color: inherit;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.profile-name {
+    font-weight: bold;
+    color: #000;
+}
+
+.profile-title {
+    font-size: 1em;
+    color: #000;
+}
+
+.profile-balance {
+    font-size: 1.1em;
+    color: #F4F4F8;
+}
+
+.profile-arrow {
+    margin-top: 10px;
+}

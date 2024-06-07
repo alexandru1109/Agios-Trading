@@ -1,17 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FaTachometerAlt, FaBuilding, FaBox, FaChevronDown, FaDollarSign, FaCog } from 'react-icons/fa';
-import axios from '../../config/axiosConfig';
-import AuthContext from '../../context/AuthContext';
-
-interface UserProfile {
-    name: string;
-    role: string;
-}
+import { FaTachometerAlt, FaBuilding, FaBox, FaDollarSign, FaCog, FaChevronDown } from 'react-icons/fa';
+import ProfileCard from './ProfileCard';
+import axios from '../config/axiosConfig';
+import AuthContext from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
-    const [profile, setProfile] = useState<UserProfile>({ name: '', role: '' });
+    const [profile, setProfile] = useState<{ name: string; role: string }>({ name: '', role: '' });
     const [balance, setBalance] = useState<number | null>(null);
     const [profileError, setProfileError] = useState<string | null>(null);
     const [balanceError, setBalanceError] = useState<string | null>(null);

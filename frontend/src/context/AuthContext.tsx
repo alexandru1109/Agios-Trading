@@ -1,23 +1,24 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import axios from '../config/axiosConfig';
 
-interface AuthContextType {
-    isAuthenticated: boolean;
-    login: (username: string, password: string) => Promise<void>;
-    logout: () => void;
-}
+const AuthContext = createContext({ isAuthenticated: false, setAuthenticated: (auth: boolean) => {} });
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthProvider: React.FC<{ children }> = ({ children }) => {
+    const [isAuthenticated, setAuthenticated] = useState(false);
 
-export const AuthProvider: React.FC = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            setAuthenticated(true);
+        }
+    }, []);
 
     const login = async (username: string, password: string) => {
         try {
             const response = await axios.post('/auth/login', { username, password });
-            const token = response.data.token; // Assuming the token is in the response
+            const token = response.data.token;  // Assuming the token is in the response
             localStorage.setItem('authToken', token);
-            setIsAuthenticated(true);
+            setAuthenticated(true);
         } catch (error) {
             console.error('Login failed', error);
         }
@@ -25,11 +26,11 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('authToken');
-        setIsAuthenticated(false);
+        setAuthenticated(false);
     };
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, setAuthenticated }}>
             {children}
         </AuthContext.Provider>
     );
