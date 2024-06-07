@@ -2,34 +2,26 @@ import requests
 import pandas as pd
 
 def fetch_stock_data(symbol, api_key):
-    URL = f"https://finnhub.io/api/v1/stock/candle"
-    parameters = {
-        "symbol": symbol,
-        "resolution": "D",  # Daily data
-        "from": 1583098860,  # Unix timestamp for data start
-        "to": 1625098860,    # Unix timestamp for data end
-        "token": api_key
-    }
-
-    response = requests.get(URL, params=parameters)
+    url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={api_key}'
+    response = requests.get(url)
+    
+    if response.status_code != 200:
+        raise ValueError(f"Error fetching data from Alpha Vantage API: {response.status_code} - {response.text}")
+    
     data = response.json()
-
-    if 's' in data and data['s'] == 'ok':
-        df = pd.DataFrame({
-            'Open': data['o'],
-            'High': data['h'],
-            'Low': data['l'],
-            'Close': data['c'],
-            'Volume': data['v']
+    
+    if 'Time Series (Daily)' in data:
+        df = pd.DataFrame(data['Time Series (Daily)']).T
+        df = df.rename(columns={
+            '1. open': 'Open',
+            '2. high': 'High',
+            '3. low': 'Low',
+            '4. close': 'Close',
+            '5. volume': 'Volume'
         })
-        df['Date'] = pd.to_datetime(data['t'], unit='s')
-        df.set_index('Date', inplace=True)
+        df.index = pd.to_datetime(df.index)
+        df = df.sort_index()
+        df = df.astype(float)
         return df
     else:
-        raise ValueError("Error fetching data from Finnhub API")
-
-# Example usage:
-# api_key = 'cp36501r01qvi2qqdio0cp36501r01qvi2qqdiog'
-# symbol = 'AAPL'
-# df = fetch_stock_data(symbol, api_key)
-# print(df.head())
+        raise ValueError(f"Error fetching data for symbol {symbol}: {data.get('Note', 'Unknown error')}")
