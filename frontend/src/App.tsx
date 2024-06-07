@@ -8,7 +8,8 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import BusinessNews from './pages/BusinessNews';
 import StockList10 from './pages/Products';
-import Transactions from './pages/Transactions'; // Importă componenta Transactions
+import Transactions from './pages/Transactions';
+import Balance from './pages/Balance'; // Import the Balance component
 import Chatbot from './pages/Chatbot';
 import Otp from './components/Auth/Otp';
 import Verify from './components/Auth/Verify';
@@ -29,6 +30,7 @@ const App: React.FC = () => {
         <Route path="/news" element={<BusinessNews />} />
         <Route path="/stocks" element={<StockList10 />} />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/balance" element={<Balance />} /> {/* Add the Balance route */}
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/otp" element={<Otp />} />
       </Routes>

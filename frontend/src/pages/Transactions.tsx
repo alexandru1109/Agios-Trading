@@ -78,11 +78,6 @@ const Transactions: React.FC = () => {
             <Navbar />
             <div className="transaction-list-content">
                 <h1>Transactions</h1>
-                {balance !== null && (
-                    <div className="balance">
-                        <h2>Current Balance: ${balance.toFixed(2)}</h2>
-                    </div>
-                )}
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : error ? (
