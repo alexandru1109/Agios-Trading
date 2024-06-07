@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from '../config/axiosConfig';
 import './Products.css';
-import Navbar from '../components/Home/Navbar'; // Corrected import path
+import Navbar from '../components/Home/Navbar';
 
 interface Stock {
   symbol: string;
@@ -16,6 +16,9 @@ const StockList10: React.FC = () => {
   const [stocks, setStocks] = useState<Stock[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [symbol, setSymbol] = useState('');
+  const [prediction, setPrediction] = useState<string | null>(null);
+  const [decision, setDecision] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchStocks = async () => {
@@ -35,6 +38,24 @@ const StockList10: React.FC = () => {
 
     fetchStocks();
   }, []);
+
+  const handlePredict = async () => {
+    try {
+      const response = await axios.post('/lstm/predict', { symbol });
+      setPrediction(response.data.prediction);
+    } catch (error) {
+      console.error('Error fetching prediction:', error);
+    }
+  };
+
+  const handleShouldBuy = async () => {
+    try {
+      const response = await axios.post('/lstm/should_buy', { symbol });
+      setDecision(response.data.decision);
+    } catch (error) {
+      console.error('Error fetching decision:', error);
+    }
+  };
 
   const handleBuy = async (symbol: string, price: number) => {
     const quantity = 1;
@@ -94,38 +115,51 @@ const StockList10: React.FC = () => {
     <div className="stock-list-container">
       <Navbar />
       <div className="stock-list-content">
-        <h1>Stock Market</h1>
+        <div className="stock-input-box">
+          <input
+            type="text"
+            value={symbol}
+            onChange={(e) => setSymbol(e.target.value)}
+            placeholder="Enter stock symbol"
+          />
+          <div className="buttons-container">
+            <button onClick={handlePredict}>Predict</button>
+            <button onClick={handleShouldBuy}>Should Buy</button>
+          </div>
+          {prediction && <div className="result-message">Prediction: {prediction}</div>}
+          {decision && <div className="result-message">Decision: {decision}</div>}
+        </div>
         {isLoading ? (
           <p>Loading stocks...</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
           <div className="stock-list">
-            {stocks.map(stock => (
+            {stocks.map((stock) => (
               <div key={stock.symbol} className="stock-item">
                 <div className="stock-header">
                   <div className="logo-placeholder"></div>
                   <h2>{stock.symbol}</h2>
                 </div>
                 <div className="stock-details">
-                  <span className="stock-label">Current Price:</span>
-                  <span className="stock-value">${stock.currentPrice}</span>
+                  <div className="stock-label">Current Price:</div>
+                  <div className="stock-value">${stock.currentPrice}</div>
                 </div>
                 <div className="stock-details">
-                  <span className="stock-label">High Price:</span>
-                  <span className="stock-value">${stock.highPrice}</span>
+                  <div className="stock-label">High Price:</div>
+                  <div className="stock-value">${stock.highPrice}</div>
                 </div>
                 <div className="stock-details">
-                  <span className="stock-label">Low Price:</span>
-                  <span className="stock-value">${stock.lowPrice}</span>
+                  <div className="stock-label">Low Price:</div>
+                  <div className="stock-value">${stock.lowPrice}</div>
                 </div>
                 <div className="stock-details">
-                  <span className="stock-label">Open Price:</span>
-                  <span className="stock-value">${stock.openPrice}</span>
+                  <div className="stock-label">Open Price:</div>
+                  <div className="stock-value">${stock.openPrice}</div>
                 </div>
                 <div className="stock-details">
-                  <span className="stock-label">Previous Close Price:</span>
-                  <span className="stock-value">${stock.previousClosePrice}</span>
+                  <div className="stock-label">Previous Close Price:</div>
+                  <div className="stock-value">${stock.previousClosePrice}</div>
                 </div>
                 <div className="stock-buttons">
                   <button className="buy-button" onClick={() => handleBuy(stock.symbol, stock.currentPrice)}>Buy</button>
@@ -139,5 +173,6 @@ const StockList10: React.FC = () => {
     </div>
   );
 };
+
 
 export default StockList10;

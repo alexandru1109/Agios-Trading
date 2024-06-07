@@ -90,7 +90,7 @@ const Chart = () => {
             </div>
             {error && <div className="error">{error}</div>}
             {isLoading ? (
-                <div>Loading...</div>
+                <div>No transactions found...</div>
             ) : (
                 <div className="chart-content">
                     {graphData && (

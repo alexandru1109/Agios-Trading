@@ -5,19 +5,19 @@ export const getBalance = async (req: Request, res: Response) => {
   const userId = req.user?.id;
   console.log('User ID:', userId);
   if (!userId) {
-    return res.status(401).json({ message: 'User not authenticated' });
+    return res.status(401).json({ message: 'User not authenticated', balance: 0 });
   }
 
   try {
     const balance = await Balance.findOne({ userId });
     if (!balance) {
-      return res.status(404).json({ message: 'Balance not found' });
+      return res.status(404).json({ message: 'Balance not found', balance: 0 });
     }
 
     res.status(200).json({ balance: balance.amount });
   } catch (error) {
     console.error('Error fetching balance:', error);
-    res.status(500).json({ message: 'Error fetching balance', error });
+    res.status(500).json({ message: 'Error fetching balance', balance: 0 });
   }
 };
 
