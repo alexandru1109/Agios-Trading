@@ -34,14 +34,14 @@ const Transactions: React.FC = () => {
                     setTransactions(response.data.transactions);
                 } else {
                     console.error('Invalid response format:', response.data); // Log invalid format
-                    setError('Invalid response format');
+                    setError('No transactions found...');
                 }
             } else {
-                setError('No token found');
+                setError('No transactions found...');
             }
         } catch (error) {
             console.error('Error fetching transactions:', error); // Log any errors
-            setError('Error fetching transactions');
+            setError('No transactions found...');
         } finally {
             setIsLoading(false);
         }
@@ -61,12 +61,17 @@ const Transactions: React.FC = () => {
                     setBalance(response.data.balance);
                 } else {
                     console.error('Invalid balance format:', response.data);
+                    setBalance(0); 
                 }
+            } else {
+                setBalance(0); 
             }
         } catch (error) {
             console.error('Error fetching balance', error);
+            setBalance(0); 
         }
     };
+    
 
     useEffect(() => {
         fetchTransactions();
