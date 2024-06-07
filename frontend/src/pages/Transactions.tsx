@@ -15,6 +15,7 @@ interface Transaction {
 
 const Transactions: React.FC = () => {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
+    const [balance, setBalance] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -56,6 +57,11 @@ const Transactions: React.FC = () => {
                     },
                 });
                 console.log('Current balance:', response.data);
+                if (response.data && typeof response.data.balance === 'number') {
+                    setBalance(response.data.balance);
+                } else {
+                    console.error('Invalid balance format:', response.data);
+                }
             }
         } catch (error) {
             console.error('Error fetching balance', error);
@@ -72,6 +78,11 @@ const Transactions: React.FC = () => {
             <Navbar />
             <div className="transaction-list-content">
                 <h1>Transactions</h1>
+                {balance !== null && (
+                    <div className="balance">
+                        <h2>Current Balance: ${balance.toFixed(2)}</h2>
+                    </div>
+                )}
                 {isLoading ? (
                     <p>Loading...</p>
                 ) : error ? (
