@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 import os
 
-api_key = 'your_alpha_vantage_api_key'  # Your Alpha Vantage API Key
+api_key = 'KE1LFMJTUCSB616G'  # Your Alpha Vantage API Key
 symbols = ['TSLA', 'NVDA', 'GOOGL', 'AAPL', 'AMZN']  # Stock symbols
 model_path = 'saved_model.h5'
 
