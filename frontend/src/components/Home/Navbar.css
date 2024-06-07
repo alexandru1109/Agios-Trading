@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     background-color: #1a1a2e;
-    color: #ecf0f1;
+    color: #F4F4F8;
     width: 250px;
     height: 100vh;
     position: fixed;
@@ -19,7 +19,7 @@
     margin: 20px 0;
     padding: 30px 20px;
     background-color: #13524b;
-    color: white;
+    color: #F4F4F8;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -32,7 +32,7 @@
 
 .profile-card:hover,
 .button:hover {
-    background-color: #2ec4b6;
+    background-color: #4CAF50;
     color: inherit;
 }
 
@@ -60,7 +60,7 @@
 
 .profile-balance {
     font-size: 1.1em;
-    color: #ecf0f1;
+    color: #F4F4F8;
 }
 
 .profile-details {
@@ -68,7 +68,7 @@
     flex-direction: column;
     padding: 20px;
     background-color: #1a1a2e;
-    color: #ecf0f1;
+    color: #F4F4F8;
     border-radius: 10px;
 }
 
@@ -90,7 +90,7 @@
 .admins-menu-title {
     padding: 10px 0;
     font-size: 1.2em;
-    color: #a9a9a9;
+    color: #F4F4F8;
     margin-bottom: 10px;
 }
 
@@ -109,7 +109,7 @@
     align-items: center;
     padding: 10px;
     background-color: #162447;
-    color: #ecf0f1;
+    color: #F4F4F8;
     border-radius: 5px;
     text-decoration: none;
     transition: background-color 0.3s;
@@ -128,7 +128,7 @@
     margin: 20px 0 50px 0; /* Adaugă o margine de 30px față de marginea de jos */
     padding: 10px 20px;
     background-color: #162447;
-    color: #ecf0f1;
+    color: #F4F4F8;
     border: none;
     border-radius: 10px;
     cursor: pointer;

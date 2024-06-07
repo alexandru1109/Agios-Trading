@@ -35,7 +35,6 @@
 
 .cards {
     display: flex;
-    flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 20px;
     height: 40vh; /* Mărim înălțimea secțiunii cardurilor */
@@ -46,7 +45,7 @@
 .chart-container {
     flex-grow: 1;
     margin-bottom: 20px;
-    height: 1000vh; /* Mărim înălțimea graficului */
+    height: 1500vh; /* Mărim înălțimea graficului */
     overflow-y: hidden; /* Înlăturăm scroll-ul vertical */
     overflow-x: hidden; /* Înlăturăm scroll-ul orizontal */
 }
@@ -55,7 +54,7 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #007bff;
+    background-color: #89023E;
     color: white;
     border: none;
     border-radius: 50%;
@@ -93,17 +92,17 @@
 }
 
 .card.green {
-    background-color: #00a706; /* Verde */
+    background-color: #4CAF50; /* Verde */
     color: white; /* Text alb */
 }
 
 .card.red {
-    background-color: #b7000f; /* Roșu */
+    background-color: #89023E; /* Roșu */
     color: white; /* Text alb */
 }
 
 .card.blue {
-    background-color: #005ca8; /* Albastru */
+    background-color: #162447; /* Albastru */
     color: white; /* Text alb */
 }
 

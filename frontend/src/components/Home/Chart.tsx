@@ -99,12 +99,27 @@ const Chart = () => {
                                 labels: graphData.labels,
                                 datasets: graphData.datasets.map(dataset => ({
                                     ...dataset,
-                                    borderColor: dataset.borderColor || '#4caf50',
-                                    backgroundColor: dataset.backgroundColor || 'rgba(76, 175, 80, 0.2)',
+                                    borderColor: '#ffffff', // White border color
+                                    backgroundColor: 'rgba(255, 255, 255, 0.2)', // White background color with transparency
                                 })),
                             }}
                             options={{
                                 maintainAspectRatio: false,
+                                scales: {
+                                    x: {
+                                        ticks: { color: '#ffffff' }, // Dark color for x-axis labels
+                                    },
+                                    y: {
+                                        ticks: { color: '#ffffff' }, // Dark color for y-axis labels
+                                    },
+                                },
+                                plugins: {
+                                    legend: {
+                                        labels: {
+                                            color: '#ffffff' // Dark color for legend text
+                                        }
+                                    }
+                                }
                             }}
                         />
                     )}
