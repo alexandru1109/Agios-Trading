@@ -55,14 +55,14 @@ const Chart = () => {
                 if (response.data && response.data.labels && response.data.datasets) {
                     setGraphData(response.data);
                 } else {
-                    setError('Invalid response format');
+                    setError('No transactions found...');
                 }
             } else {
-                setError('No token found');
+                setError('No transactions found...');
             }
         } catch (error) {
-            console.error('Error fetching graph data:', error);
-            setError('Error fetching graph data');
+            console.error('No transactions found...');
+            setError('No transactions found...');
         } finally {
             setIsLoading(false);
         }
