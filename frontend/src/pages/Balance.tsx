@@ -8,6 +8,7 @@ const Balance: React.FC = () => {
     const [stocks, setStocks] = useState<any[] | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [amount, setAmount] = useState<number>(0);
 
     const fetchBalance = async () => {
         try {
@@ -36,17 +37,12 @@ const Balance: React.FC = () => {
             const token = localStorage.getItem('authToken');
             const userId = localStorage.getItem('userId');
 
-            console.log('Token:', token); // Debugging line
-            console.log('User ID:', userId); // Debugging line
-            console.log('Local Storage:', localStorage); // Debugging line
-
             if (token && userId) {
                 const response = await axios.get(`/stock/get/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                console.log('Stocks response:', response.data); // Debugging line
                 if (response.data && Array.isArray(response.data)) {
                     setStocks(response.data);
                 } else {
@@ -61,6 +57,27 @@ const Balance: React.FC = () => {
             setStocks(null); // Default value on error
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const handleAddBalance = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            if (token) {
+                const response = await axios.post('/balance/add', { amount }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data && response.data.balance !== undefined) {
+                    setBalance(response.data.balance);
+                    console.log('Balance after adding:', response.data.balance);
+                } else {
+                    console.error('Error adding balance:', response.data);
+                }
+            }
+        } catch (error) {
+            console.error('Error adding balance:', error);
         }
     };
 
@@ -93,6 +110,15 @@ const Balance: React.FC = () => {
                     ) : (
                         <p>Nu are stocuri</p>
                     )}
+                </div>
+                <div className="balance-actions">
+                    <input
+                        type="number"
+                        value={amount}
+                        onChange={(e) => setAmount(Number(e.target.value))}
+                        placeholder="Enter amount"
+                    />
+                    <button onClick={handleAddBalance}>Add Balance</button>
                 </div>
             </div>
         </div>
