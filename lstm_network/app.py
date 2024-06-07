@@ -15,6 +15,7 @@ def predict():
     symbol = data.get('symbol')
     try:
         prediction, historical_data = main.predict(symbol)
+        # Convert historical data to list to ensure JSON serializability
         return jsonify({'prediction': prediction, 'historical_data': historical_data.tolist()})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
