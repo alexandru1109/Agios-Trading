@@ -1,14 +1,97 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import { FaTachometerAlt, FaBuilding, FaBox, FaDollarSign, FaCog } from 'react-icons/fa';
+import { FaTachometerAlt, FaBuilding, FaBox, FaDollarSign, FaCog, FaChevronDown } from 'react-icons/fa';
 import ProfileCard from './ProfileCard';
+import axios from '../config/axiosConfig';
+import AuthContext from '../context/AuthContext';
 
 const Navbar: React.FC = () => {
+    const [profile, setProfile] = useState<{ name: string; role: string }>({ name: '', role: '' });
+    const [balance, setBalance] = useState<number | null>(null);
+    const [profileError, setProfileError] = useState<string | null>(null);
+    const [balanceError, setBalanceError] = useState<string | null>(null);
+    const authContext = useContext(AuthContext);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            console.log('Fetching profile...'); // Log function call
+            try {
+                const token = localStorage.getItem('authToken');
+                console.log('Auth Token:', token); // Log the token
+                if (token) {
+                    const response = await axios.get('/users/profile', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    console.log('Profile Response:', response.data); // Log the response
+                    setProfile(response.data);
+                } else {
+                    console.log('No token found');
+                    setProfileError('User not authenticated');
+                }
+            } catch (error) {
+                console.error('Error fetching profile data:', error); // Log the error
+                setProfileError('Error fetching profile data');
+            }
+        };
+
+        const fetchBalance = async () => {
+            console.log('Fetching balance...'); // Log function call
+            try {
+                const token = localStorage.getItem('authToken');
+                console.log('Auth Token:', token); // Log the token
+                if (token) {
+                    const response = await axios.get('/balance/get', {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    console.log('Balance Response:', response.data); // Log the response
+                    setBalance(response.data.balance);
+                } else {
+                    console.log('No token found');
+                    setBalanceError('User not authenticated');
+                }
+            } catch (error) {
+                console.error('Error fetching balance:', error); // Log the error
+                setBalanceError('Error fetching balance');
+            }
+        };
+
+        if (authContext?.isAuthenticated) {
+            console.log('User is authenticated'); // Log authentication status
+            fetchProfile();
+            fetchBalance();
+        } else {
+            console.log('User is not authenticated');
+        }
+    }, [authContext]);
+
     return (
         <nav className="navbar">
             <div>
-                <ProfileCard />
+                <Link to="/profile" className="profile-card">
+                    <div className="profile-info">
+                        {profileError ? (
+                            <p>{profileError}</p>
+                        ) : (
+                            <>
+                                <div className="profile-name">{profile.name}</div>
+                                <div className="profile-title">{profile.role}</div>
+                                <div className="profile-balance">
+                                    Balance: {balanceError ? (
+                                        <span>{balanceError}</span>
+                                    ) : (
+                                        `$${balance?.toFixed(2)}`
+                                    )}
+                                </div>
+                            </>
+                        )}
+                        <FaChevronDown className="profile-arrow" />
+                    </div>
+                </Link>
                 <div className="admins-menu">
                     <div className="admins-menu-title">Menu:</div>
                     <ul className="navbar-links">
